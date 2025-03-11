@@ -35,9 +35,9 @@ const items = [
   },
   {
     icon: <MdSubscriptions color="white" fontSize={16} />,
-    title: "Subscription",
-    amount: 69420,
-    percentage: -2,
+    title: "Risk",
+    amount: <p className="text-red-500">30 %</p>,
+    // percentage: -30,
     bgColor: "bg-[#E87D7D]",
   },
 ];
