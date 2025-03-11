@@ -1,5 +1,11 @@
 import React from "react";
-import { ComposedChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import {
+  ComposedChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+} from "recharts";
 
 import dashCash from "../../assets/dashDollar.png";
 import dashKhalti from "../../assets/dashKhalti.png";
@@ -33,7 +39,9 @@ export default function PaymentGateway() {
             <img src={item.image} alt="" />
             <p className="text-[#808080] font-medium text-sm">{item.name}</p>
           </div>
-          <p className="text-[#4C4C4C] font-semibold text-base">{item.amount}</p>
+          <p className="text-[#4C4C4C] font-semibold text-base">
+            {item.amount}
+          </p>
         </div>
       ))}
     </div>
@@ -42,7 +50,7 @@ export default function PaymentGateway() {
   return (
     <div className="p-5 bg-white rounded-xl">
       <h2 className="text-[#4C4C4C] text-lg font-semibold mb-5">
-        Payment Gateway
+        Rating Breakdown
       </h2>
       <div className="-ml-14">
         <ResponsiveContainer width="100%" height={150}>
@@ -53,7 +61,12 @@ export default function PaymentGateway() {
             barGap={14}
           >
             <XAxis type="number" axisLine={false} tick={null} />
-            <YAxis dataKey="name" type="category" scale="band" axisLine={false} />
+            <YAxis
+              dataKey="name"
+              type="category"
+              scale="band"
+              axisLine={false}
+            />
             <Bar
               dataKey="Cash"
               barSize={20}

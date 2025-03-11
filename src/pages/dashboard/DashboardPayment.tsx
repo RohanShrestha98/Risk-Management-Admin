@@ -47,7 +47,7 @@ export default function DashboardPayment() {
       className="p-5 bg-white rounded-xl"
       style={{ width: "100%", height: "300px" }}
     >
-      <h2 className="text-[#4C4C4C] text-lg font-semibold mb-5">Payment</h2>
+      <h2 className="text-[#4C4C4C] text-lg font-semibold mb-5">Reports</h2>
       <div style={{ width: "100%", height: "100%" }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart

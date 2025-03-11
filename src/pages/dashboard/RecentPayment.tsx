@@ -61,7 +61,7 @@ export default function RecentPayment() {
   return (
     <div className="py-5 bg-white rounded-xl">
       <div className="px-5 flex justify-between items-center mb-5">
-        <h2 className="text-[#4C4C4C] text-lg font-semibold">Recent Payment</h2>
+        <h2 className="text-[#4C4C4C] text-lg font-semibold">Recent Task</h2>
         <button className="text-sm font-medium text-[#4365a7] flex items-center gap-1">
           View all <FaArrowRight fontSize={14} />
         </button>
