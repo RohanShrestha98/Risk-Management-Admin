@@ -64,8 +64,8 @@ const Login = () => {
       <div className="flex md:justify-center p-4 gap-1 items-center ">
         <img className="h-12 w-12" src={logo} alt="logo" />
         <div className="font-bold text-[#121212] flex flex-col">
-          <p>Risk Management</p>
-          <p className="mt-[-6px]">System</p>
+          <p>Risk Register</p>
+          <p className="mt-[-6px]">App</p>
         </div>
       </div>
       <div className="md:items-center md:justify-center flex flex-col">

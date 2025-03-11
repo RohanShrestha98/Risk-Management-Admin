@@ -8,7 +8,7 @@ const AuthLayout = () => {
         <div className="bg-[#121212] flex flex-col px-[150px] lg:px-8 md:px-6 sm:px-3 pt-[70px]   w-1/2">
           <img src={login} alt="" className="ml-10 w-80 h-80" />
           <p className="text-[#C9BDF6] text-3xl font-bold text-center">
-            Risk Management <br /> System
+            Risk Register <br /> App
           </p>
         </div>
         <div className="md:w-full w-1/2 h-screen">
