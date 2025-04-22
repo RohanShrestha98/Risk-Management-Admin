@@ -6,21 +6,8 @@ import {
 } from "@/components/ui/dialog";
 import Button from "@/ui/Button";
 import {
-  useCategoryMutation,
-  useChapterMutation,
-  useCourseMutation,
   useUserMutation,
-  useLiveGroupMutation,
-  useLiveMutation,
   useNotificationMutation,
-  useQuestionBankMutation,
-  useQuestionMutation,
-  useQuizMutation,
-  useReferalCodeMutation,
-  useSubjectMutation,
-  useTestSeriesMutation,
-  useTestTypeMutation,
-  useUnitMutation,
   useRiskMutation,
 } from "@/hooks/useMutateData";
 import "react-quill/dist/quill.snow.css";
@@ -35,57 +22,13 @@ export default function DeleteModal({ asChild, children, title, desc, id }) {
   const userMutation = useUserMutation();
   const notificationMutation = useNotificationMutation();
   const riskMutation = useRiskMutation();
-  const courseMutation = useCourseMutation();
-  const subjectMutation = useSubjectMutation();
-  const categoryMutation = useCategoryMutation();
-  const instructorsMutation = useUserMutation();
-  const questionBankMutation = useQuestionBankMutation();
-  const questionMutation = useQuestionMutation();
-  const referalCodesMutation = useReferalCodeMutation();
-  const chapterMutation = useChapterMutation();
-  const liveGroupMutation = useLiveGroupMutation();
-  const liveMutation = useLiveMutation();
-  const unitMutation = useUnitMutation();
-  const quizMutation = useQuizMutation();
-  const testTypeMutation = useTestTypeMutation();
-  const testSeriesMutation = useTestSeriesMutation();
 
   const deleteMutation =
-    pathname === "test-series"
-      ? testSeriesMutation
-      : pathname === "test-type"
-      ? testTypeMutation
-      : pathname === "test"
-      ? quizMutation
-      : pathname === "units"
-      ? unitMutation
-      : pathname === "live"
-      ? liveMutation
-      : pathname === "live-group"
-      ? liveGroupMutation
-      : pathname === "notification"
+    pathname === "notification"
       ? notificationMutation
       : pathname === "risk"
       ? riskMutation
-      : pathname === "chapters"
-      ? chapterMutation
-      : pathname === "user"
-      ? userMutation
-      : pathname === "courses"
-      ? courseMutation
-      : pathname === "subjects"
-      ? subjectMutation
-      : pathname === "category"
-      ? categoryMutation
-      : pathname === "instructors"
-      ? instructorsMutation
-      : pathname === "question-bank"
-      ? questionBankMutation
-      : pathname === "question"
-      ? questionMutation
-      : pathname === "referal-codes"
-      ? referalCodesMutation
-      : courseMutation;
+      : pathname === "user" && userMutation;
 
   const handleDelete = async () => {
     try {
