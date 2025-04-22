@@ -3,22 +3,14 @@ import { ReactTable } from "../../components/Table";
 import { useEffect, useMemo, useState } from "react";
 import AddInstructorModal from "./AddUserModal";
 import TopButton from "@/components/TopButton";
-import {
-  useCourseData,
-  useSubjectData,
-  useTeacherData,
-} from "@/hooks/useQueryData";
+import { useUserData } from "@/hooks/useQueryData";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import DeleteModal from "@/components/DeleteModal";
 import { useSearchParams } from "react-router-dom";
-import FilterSearch from "@/components/FilterSearch";
 import AddUserModal from "./AddUserModal";
 
 export default function User() {
-  const [selectedField, setSelectedField] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = useState(
     searchParams.get("searchText") ?? ""
@@ -27,17 +19,7 @@ export default function User() {
     searchParams.get("pageSize") ?? "10"
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
-  const { data, isLoading, isError } = useTeacherData(
-    searchText,
-    selectedField,
-    pageSize,
-    page,
-    selectedSubject
-  );
-  const { data: courseData } = useCourseData();
-  const courseOptions = convertToSelectOptions(courseData?.data);
-  const { data: subjectData } = useSubjectData("", selectedField);
-  const subjectOptions = convertToSelectOptions(subjectData?.data);
+  const { data, isLoading, isError } = useUserData(searchText, pageSize, page);
 
   const columns = useMemo(
     () => [
@@ -48,30 +30,21 @@ export default function User() {
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.name,
-        id: "name",
-        cell: (info) => {
-          return (
-            <div className="flex items-center gap-1">
-              {info?.row?.original?.image ? (
-                <img
-                  className="h-8 w-8 object-cover rounded-full"
-                  src={info?.row?.original?.image}
-                  alt=""
-                />
-              ) : (
-                <div className="h-8 w-8 rounded-full bg-gray-100"></div>
-              )}
-              <p className="flex items-center gap-1">
-                {info?.row?.original?.firstName + " "}
-                {info?.row?.original?.middleName + " "}
-                {info?.row?.original?.lastName}
-              </p>
-            </div>
-          );
-        },
-        // info.getValue(),
-        header: () => <span>Instructor Name</span>,
+        accessorFn: (row) => row?.firstname,
+        id: "firstname",
+        header: () => <span>First Name</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.lastname,
+        id: "lastname",
+        header: () => <span>Last Name</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.username,
+        id: "username",
+        header: () => <span>User Name</span>,
         footer: (props) => props.column.id,
       },
       {
@@ -81,23 +54,17 @@ export default function User() {
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.phone,
-        id: "phone",
+        accessorFn: (row) => row?.phonenumber,
+        id: "phonenumber",
         cell: (info) => info.getValue(),
-        header: () => <span>Phone</span>,
+        header: () => <span>Phone number</span>,
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.subject?.title,
-        id: "Subject",
+        accessorFn: (row) => row?.role,
+        id: "role",
         // info.getValue(),
-        header: () => <span>Subject</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.course?.courseID,
-        id: "Course",
-        header: () => <span>Course</span>,
+        header: () => <span>Role</span>,
         footer: (props) => props.column.id,
       },
       {
@@ -111,8 +78,8 @@ export default function User() {
               </AddInstructorModal>
               <DeleteModal
                 asChild
-                desc={"Are you sure you want to delete this instructor"}
-                title={"Delete Instructor"}
+                desc={"Are you sure you want to delete this User"}
+                title={"Delete User"}
                 id={info?.row?.original?.id}
               >
                 <FaRegTrashCan className="text-red-600 cursor-pointer" />

@@ -1,4 +1,3 @@
-import ChooseImage from "@/components/ChooseImage";
 import {
   Dialog,
   DialogContent,
@@ -9,12 +8,10 @@ import Button from "@/ui/Button";
 import CustomSelect from "@/ui/CustomSelect";
 import InputField from "@/ui/InputField";
 import { useForm } from "react-hook-form";
-import { useInstructorMutation } from "@/hooks/useMutateData";
+import { useUserMutation } from "@/hooks/useMutateData";
 import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useCourseData, useSubjectData } from "@/hooks/useQueryData";
-import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import toast from "react-hot-toast";
 
 export default function AddUserModal({
@@ -23,39 +20,23 @@ export default function AddUserModal({
   edit = false,
   editData,
 }) {
-  const [selectedCourse, setSelectedCourse] = useState(
-    edit ? editData?.course?.id : ""
-  );
-  const [selectedSubject, setSelectedSubject] = useState(
-    edit ? editData?.subject?.id : ""
-  );
-  const [selectedGender, setSelectedGender] = useState(
-    edit ? editData?.gender : ""
-  );
-  const [selectedImage, setSelectedImage] = useState();
+  const [selectedRole, setSelectedRole] = useState(edit ? editData?.role : "");
   const [open, setOpen] = useState(false);
-  const { data } = useCourseData("", "", "", "", open);
-  const { data: subjectData } = useSubjectData(
-    "",
-    selectedCourse,
-    "",
-    "",
-    open
-  );
-  const courseOptions = convertToSelectOptions(data?.data);
-  const subjectOptions = convertToSelectOptions(subjectData?.data);
   const [hasSubmittedClick, setHasSubmittedClick] = useState(false);
   const [error, setError] = useState("");
 
   const fieldSchema = Yup.object().shape({
-    firstName: Yup.string()
+    firstname: Yup.string()
       .required("Required")
       .max(36, "Must be 36 characters or less"),
-    lastName: Yup.string()
+    lastname: Yup.string()
       .required("Required")
       .max(36, "Must be 36 characters or less"),
-    middleName: Yup.string().max(36, "Must be 36 characters or less"),
+    username: Yup.string()
+      .required("Required")
+      .max(36, "Must be 36 characters or less"),
     email: Yup.string().required("Required"),
+    phonenumber: Yup.string().required("Required"),
     password: Yup.string().required("Required"),
   });
 
@@ -68,9 +49,10 @@ export default function AddUserModal({
     mode: "onChange",
     resolver: yupResolver(fieldSchema),
     defaultValues: {
-      firstName: editData?.firstName ?? "",
-      lastName: editData?.lastName ?? "",
-      middleName: editData?.middleName ?? "",
+      firstname: editData?.firstname ?? "",
+      lastname: editData?.lastname ?? "",
+      username: editData?.username ?? "",
+      phonenumber: editData?.phonenumber ?? "",
       email: editData?.email ?? "",
       password: editData?.password ?? "",
     },
@@ -78,10 +60,10 @@ export default function AddUserModal({
 
   useEffect(() => {
     reset({
-      firstName: editData?.firstName ?? "",
-      lastName: editData?.lastName ?? "",
-      middleName: editData?.middleName ?? "",
-      phone: editData?.phone ?? "",
+      firstname: editData?.firstname ?? "",
+      lastname: editData?.lastname ?? "",
+      username: editData?.username ?? "",
+      phonenumber: editData?.phonenumber ?? "",
       email: editData?.email ?? "",
       password: editData?.password ?? "",
     });
@@ -90,25 +72,19 @@ export default function AddUserModal({
 
   const handleClear = (e) => {
     e.preventDefault();
-    setSelectedCourse("");
-    setSelectedSubject("");
-    setSelectedImage("");
-    setSelectedGender("");
+    setSelectedRole("");
     reset();
   };
 
-  const instructorMutation = useInstructorMutation();
+  const userMutation = useUserMutation();
 
   const onSubmitHandler = async (data) => {
     const postData = {
       ...data,
-      courseid: selectedCourse,
-      subjectid: selectedSubject,
-      gender: selectedGender,
-      image: selectedImage && selectedImage,
+      role: selectedRole,
     };
     try {
-      const response = await instructorMutation.mutateAsync([
+      const response = await userMutation.mutateAsync([
         `${edit ? "patch" : "post"}`,
         edit ? `update/${editData?.id}` : "create/",
         postData,
@@ -116,28 +92,36 @@ export default function AddUserModal({
       setHasSubmittedClick(false);
       setOpen(false);
       reset();
-      setSelectedImage();
       setError();
-      toast.success(`Instructor ${edit ? "updated" : "added"} successfully`);
+      toast.success(`User ${edit ? "updated" : "added"} successfully`);
     } catch (err) {
       console.log("err", err);
       setError(err?.response?.data?.errors);
     }
   };
-  const genderOptions = [
+  const roleOptions = [
     {
-      value: "male",
-      label: "Male",
+      value: "admin",
+      label: "Admin",
     },
     {
-      value: "female",
-      label: "Female",
+      value: "analyst",
+      label: "Analyst",
     },
     {
-      value: "other",
-      label: "Others",
+      value: "midLevelAnalyst",
+      label: "Mid Level Analyst",
+    },
+    {
+      value: "executiveLevelAnalyst",
+      label: "Executive Level Analyst",
+    },
+    {
+      value: "ISO",
+      label: "ISO",
     },
   ];
+  console.log("errors", errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -152,7 +136,7 @@ export default function AddUserModal({
               <div className="">
                 <InputField
                   register={register}
-                  name="firstName"
+                  name="firstname"
                   placeholder="Enter First Name"
                   className="w-full text-sm text-gray-500"
                   defaultValue=""
@@ -160,27 +144,14 @@ export default function AddUserModal({
                   label="First Name"
                 />
                 <p className="text-red-600 text-xs">
-                  {errors?.firstName?.message ?? error?.firstName}
+                  {errors?.firstname?.message ?? error?.firstname}
                 </p>
               </div>
+
               <div className="">
                 <InputField
                   register={register}
-                  name="middleName"
-                  placeholder="Enter Middle Name"
-                  className="w-full text-sm text-gray-500"
-                  defaultValue=""
-                  required={false}
-                  label="Middle Name"
-                />
-                <p className="text-red-600 text-xs">
-                  {errors?.middleName?.message ?? error?.middleName}
-                </p>
-              </div>
-              <div className="">
-                <InputField
-                  register={register}
-                  name="lastName"
+                  name="lastname"
                   placeholder="Enter Last Name"
                   className="w-full text-sm text-gray-500"
                   defaultValue=""
@@ -188,27 +159,9 @@ export default function AddUserModal({
                   label="Last Name"
                 />
                 <p className="text-red-600 text-xs">
-                  {errors?.lastName?.message ?? error?.lastName}
+                  {errors?.lastname?.message ?? error?.lastname}
                 </p>
               </div>
-              <div>
-                <CustomSelect
-                  options={genderOptions}
-                  label={""}
-                  placeholder={edit ? editData?.gender : "Select gender"}
-                  setSelectedField={setSelectedGender}
-                  className={"w-full text-sm text-gray-500"}
-                  labelName={"Gender"}
-                  required={true}
-                />
-                <p className="text-red-600 text-xs">
-                  {hasSubmittedClick && !selectedGender && "Required"}
-                  {error?.gender}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
               <div className="">
                 <InputField
                   register={register}
@@ -237,6 +190,50 @@ export default function AddUserModal({
                 />
                 <p className="text-red-600 text-xs">
                   {errors?.password?.message ?? error?.password}
+                </p>
+              </div>
+              <div className="">
+                <InputField
+                  register={register}
+                  name="username"
+                  placeholder="Enter user Name"
+                  className="w-full text-sm text-gray-500"
+                  defaultValue=""
+                  required={true}
+                  label="User Name"
+                />
+                <p className="text-red-600 text-xs">
+                  {errors?.username?.message ?? error?.username}
+                </p>
+              </div>
+              <div>
+                <CustomSelect
+                  options={roleOptions}
+                  label={""}
+                  placeholder={edit ? editData?.role : "Select role"}
+                  setSelectedField={setSelectedRole}
+                  className={"w-full text-sm text-gray-500"}
+                  labelName={"Role"}
+                  required={true}
+                />
+                <p className="text-red-600 text-xs">
+                  {hasSubmittedClick && !selectedRole && "Required"}
+                  {error?.role}
+                </p>
+              </div>
+              <div className="">
+                <InputField
+                  register={register}
+                  name="phonenumber"
+                  placeholder="Enter phone number"
+                  className="w-full text-sm text-gray-500"
+                  defaultValue=""
+                  required={true}
+                  type="number"
+                  label="Phone number"
+                />
+                <p className="text-red-600 text-xs">
+                  {errors?.phonenumber?.message ?? error?.phonenumber}
                 </p>
               </div>
             </div>

@@ -37,8 +37,8 @@ export const useAuthMutation = () => useMutate(["auth"], "auth/v3/login/");
 export const useAuthSignupMutation = () =>
   useMutate(["signup"], "auth/v3/register");
 
-export const useInstructorMutation = () =>
-  useMutate(["teacher"], "api/v3/teacher/", "multipart/form-data");
+export const useUserMutation = () =>
+  useMutate(["user"], "auth/v1/", "multipart/form-data");
 
 export const useCourseMutation = () =>
   useMutate(["course"], "api/v3/course/", "multipart/form-data");
@@ -76,7 +76,6 @@ export const useQuizMutation = () =>
 export const useTestTypeMutation = () =>
   useMutate(["test-type"], "api/v3/test-type/", "multipart/form-data");
 
-
 export const useTestSeriesMutation = () =>
   useMutate(["test-series"], "api/v3/test-series/", "multipart/form-data");
 export const useNotificationMutation = () =>
@@ -85,8 +84,7 @@ export const useNotificationMutation = () =>
 export const useLiveGroupMutation = () =>
   useMutate(["live-group"], "api/v3/live-group/", "multipart/form-data");
 
-export const useLiveMutation = () =>
-  useMutate(["live"], "api/v3/live/");
+export const useLiveMutation = () => useMutate(["live"], "api/v3/live/");
 
 export const usePackageMutation = () =>
   useMutate(["package"], "api/v3/package/", "multipart/form-data");
@@ -111,4 +109,3 @@ export const useTestUpdateStatusMutation = () =>
 
 export const useCourseUpdateStatusMutation = () =>
   useMutate(["course"], "api/v3/course/update-availability/");
-

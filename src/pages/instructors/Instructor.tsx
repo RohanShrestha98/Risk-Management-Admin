@@ -6,7 +6,7 @@ import TopButton from "@/components/TopButton";
 import {
   useCourseData,
   useSubjectData,
-  useTeacherData,
+  useUserData,
 } from "@/hooks/useQueryData";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -26,7 +26,7 @@ export default function Instructor() {
     searchParams.get("pageSize") ?? "10"
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
-  const { data, isLoading, isError } = useTeacherData(
+  const { data, isLoading, isError } = useUserData(
     searchText,
     selectedField,
     pageSize,

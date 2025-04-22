@@ -12,7 +12,7 @@ import LoginInput from "@/ui/LoginInput";
 import toast from "react-hot-toast";
 
 const loginSchema = Yup.object().shape({
-  identity: Yup.string()
+  username: Yup.string()
     .required("Required")
     .max(36, "Must be 36 characters or less"),
   password: Yup.string().required("Required"),
@@ -83,14 +83,14 @@ const Login = () => {
             >
               <div className="rounded-md">
                 <p className="text-red-600 text-xs">
-                  {errors?.identity?.message ?? error?.identity}
+                  {errors?.username?.message ?? error?.username}
                 </p>
                 <LoginInput
                   className="bg-white w-full text-sm"
                   register={register}
-                  name="identity"
+                  name="username"
                   type="text"
-                  placeholder="Email or Phone number"
+                  placeholder="Enter user name"
                 />
               </div>
               <div className="rounded-md">
