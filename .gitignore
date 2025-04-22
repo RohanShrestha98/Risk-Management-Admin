@@ -29,4 +29,4 @@ yarn.lock
 *.sw?
 
 # dotenv
-.env
+# .env
