@@ -40,6 +40,12 @@ export const useAuthSignupMutation = () =>
 export const useUserMutation = () =>
   useMutate(["user"], "auth/v1/", "multipart/form-data");
 
+export const useNotificationMutation = () =>
+  useMutate(["notification"], "api/v1/notification/", "multipart/form-data");
+
+export const useRiskMutation = () =>
+  useMutate(["risk"], "api/v1/risk/", "multipart/form-data");
+
 export const useCourseMutation = () =>
   useMutate(["course"], "api/v3/course/", "multipart/form-data");
 
@@ -78,8 +84,6 @@ export const useTestTypeMutation = () =>
 
 export const useTestSeriesMutation = () =>
   useMutate(["test-series"], "api/v3/test-series/", "multipart/form-data");
-export const useNotificationMutation = () =>
-  useMutate(["notification"], "api/v3/notification/", "multipart/form-data");
 
 export const useLiveGroupMutation = () =>
   useMutate(["live-group"], "api/v3/live-group/", "multipart/form-data");

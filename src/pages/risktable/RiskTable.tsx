@@ -2,19 +2,16 @@ import SearchPagination from "@/components/SearchPagination";
 import { ReactTable } from "../../components/Table";
 import { useEffect, useMemo, useState } from "react";
 import TopButton from "@/components/TopButton";
-import { useCourseData, useCourseGroupData } from "@/hooks/useQueryData";
+import { useRiskData } from "@/hooks/useQueryData";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import AddCourseModal from "./AddRiskTableModal";
-import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import DeleteModal from "@/components/DeleteModal";
 import truncateText from "@/utils/truncateText";
 import { useSearchParams } from "react-router-dom";
-import FilterSearch from "@/components/FilterSearch";
 import { Switch } from "@/components/ui/switch";
 import { useCourseUpdateStatusMutation } from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
-import AddMyActionsModal from "./AddRiskTableModal";
 import AddRiskTableModal from "./AddRiskTableModal";
 
 export default function RiskTable() {
@@ -27,14 +24,12 @@ export default function RiskTable() {
     searchParams.get("pageSize") ?? "10"
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
-  const { data, isLoading, isError } = useCourseData(
+  const { data, isLoading, isError } = useRiskData(
     searchText,
     selectedField,
     pageSize,
     page
   );
-  const { data: courseGroupData } = useCourseGroupData();
-  const courseGroupOptions = convertToSelectOptions(courseGroupData?.data);
 
   const courseUpdateStatus = useCourseUpdateStatusMutation();
 
@@ -54,41 +49,6 @@ export default function RiskTable() {
         accessorFn: (row, index) => index + 1,
         id: "id",
         header: () => <span>S.N.</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.courseID,
-        id: "courseGroup",
-        cell: (info) => {
-          return (
-            <p>{info?.row?.original?.courseGroup?.courseGroupID ?? "-"}</p>
-          );
-        },
-        header: () => <span>Course Group</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.name,
-        id: "course",
-        cell: (info) => {
-          return (
-            <div className="flex items-center gap-1">
-              {info?.row?.original?.thumbnail ? (
-                <img
-                  className="h-8 w-8 object-cover rounded-full"
-                  src={info?.row?.original?.thumbnail}
-                  alt=""
-                />
-              ) : (
-                <div className="min-h-8 min-w-8 rounded-full bg-gray-100"></div>
-              )}
-              <p className="flex items-center gap-1 line-clamp-1">
-                {truncateText(info?.row?.original?.title, 40)}
-              </p>
-            </div>
-          );
-        },
-        header: () => <span>Course Name</span>,
         footer: (props) => props.column.id,
       },
       {

@@ -24,7 +24,30 @@ export const useQueryData = (
 export const useUserData = (searchText = "", pageSize = "10", page = 1) =>
   useQueryData(
     ["user", searchText, pageSize, page],
-    `api/v1/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}`
+    `api/v1/user/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}`
+  );
+
+export const useNotificationData = (
+  searchText = "",
+  selectedField = "",
+  pageSize = "10",
+  page = 1
+) =>
+  useQueryData(
+    ["notification", searchText, selectedField, pageSize, page],
+    `api/v1/notification/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}`
+  );
+
+export const useRiskData = (
+  searchText = "",
+  selectedField = "",
+  pageSize = "10",
+  page = 1
+) =>
+  useQueryData(
+    ["risk", searchText, selectedField, pageSize, page],
+    `api/v3/risk/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseGroupID=${selectedField}`,
+    ""
   );
 
 export const useCourseData = (
@@ -183,16 +206,7 @@ export const useQuizData = (
   );
 export const useViewQuizData = (testId = "") =>
   useQueryData(["viewTest", testId], `/api/v3/test/details/${testId}`);
-export const useNotificationData = (
-  searchText = "",
-  selectedField = "",
-  pageSize = "10",
-  page = 1
-) =>
-  useQueryData(
-    ["notification", searchText, selectedField, pageSize, page],
-    `api/v3/notification/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseID=${selectedField}`
-  );
+
 export const useLiveGroupData = (
   searchText = "",
   selectedField = "",

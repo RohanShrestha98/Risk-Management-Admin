@@ -21,6 +21,7 @@ import {
   useTestSeriesMutation,
   useTestTypeMutation,
   useUnitMutation,
+  useRiskMutation,
 } from "@/hooks/useMutateData";
 import "react-quill/dist/quill.snow.css";
 import { useLocation } from "react-router-dom";
@@ -32,6 +33,8 @@ export default function DeleteModal({ asChild, children, title, desc, id }) {
   const [open, setOpen] = useState(false);
   const pathname = loaction?.pathname?.slice(1);
   const userMutation = useUserMutation();
+  const notificationMutation = useNotificationMutation();
+  const riskMutation = useRiskMutation();
   const courseMutation = useCourseMutation();
   const subjectMutation = useSubjectMutation();
   const categoryMutation = useCategoryMutation();
@@ -40,7 +43,6 @@ export default function DeleteModal({ asChild, children, title, desc, id }) {
   const questionMutation = useQuestionMutation();
   const referalCodesMutation = useReferalCodeMutation();
   const chapterMutation = useChapterMutation();
-  const notificationMutation = useNotificationMutation();
   const liveGroupMutation = useLiveGroupMutation();
   const liveMutation = useLiveMutation();
   const unitMutation = useUnitMutation();
@@ -63,6 +65,8 @@ export default function DeleteModal({ asChild, children, title, desc, id }) {
       ? liveGroupMutation
       : pathname === "notification"
       ? notificationMutation
+      : pathname === "risk"
+      ? riskMutation
       : pathname === "chapters"
       ? chapterMutation
       : pathname === "user"

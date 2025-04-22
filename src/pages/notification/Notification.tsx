@@ -2,22 +2,19 @@ import SearchPagination from "@/components/SearchPagination";
 import { ReactTable } from "../../components/Table";
 import { useEffect, useMemo, useState } from "react";
 import TopButton from "@/components/TopButton";
-import { useCourseData, useNotificationData } from "@/hooks/useQueryData";
+import { useNotificationData } from "@/hooks/useQueryData";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import AddNotificationModal from "./AddNotificationModal";
-import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
 import { FiSend } from "react-icons/fi";
 import { usePublishNotificationMutation } from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
-import FilterSearch from "@/components/FilterSearch";
 
 export default function Notification() {
-  const [selectedField, setSelectedField] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = useState(
     searchParams.get("searchText") ?? ""
@@ -27,14 +24,7 @@ export default function Notification() {
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const [error, setError] = useState();
-  const { data, isLoading, isError } = useNotificationData(
-    searchText,
-    selectedField,
-    pageSize,
-    page
-  );
-  const { data: courseData } = useCourseData();
-  const courseOptions = convertToSelectOptions(courseData?.data);
+  const { data, isLoading, isError } = useNotificationData("", "", "", "");
   const publishNotificationMutation = usePublishNotificationMutation();
 
   const handlePublish = async (id) => {
@@ -157,25 +147,15 @@ export default function Notification() {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <div className="flex justify-between items-center">
-        <FilterSearch
-          searchText={searchText}
-          setSelectedField={setSelectedField}
-          options={courseOptions}
-          inputPlaceholder={"Search Notification"}
-          setSearchText={setSearchText}
-          selectPlaceholder={"Select Course"}
-        />
-        <AddNotificationModal asChild>
-          <div>
-            <TopButton
-              buttonName={"Add Notification"}
-              className={""}
-              handleButtonClick={() => {}}
-            />
-          </div>
-        </AddNotificationModal>
-      </div>
+      <AddNotificationModal asChild>
+        <div>
+          <TopButton
+            buttonName={"Add Notification"}
+            className={""}
+            handleButtonClick={() => {}}
+          />
+        </div>
+      </AddNotificationModal>
       <div>
         <SearchPagination
           totalPage={data?.totalPage}

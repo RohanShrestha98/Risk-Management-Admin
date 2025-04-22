@@ -5,7 +5,7 @@ import { IoIosLogOut } from "react-icons/io";
 import LogoutModal from "./LogoutModal";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlinePendingActions } from "react-icons/md";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { DiAsterisk } from "react-icons/di";
 import { FiUsers } from "react-icons/fi";
 import { GoTasklist } from "react-icons/go";
@@ -25,9 +25,9 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
     { id: 7, name: "Dashboard", icon: <LuLayoutDashboard />, link: "/" },
     {
       id: 1,
-      name: "My Actions",
-      icon: <MdOutlinePendingActions />,
-      link: "/my-actions",
+      name: "Notification",
+      icon: <IoNotificationsOutline />,
+      link: "/notification",
     },
     { id: 2, name: "Risk Table", icon: <DiAsterisk />, link: "/risk" },
     { id: 3, name: "Users", icon: <FiUsers />, link: "/user" },
