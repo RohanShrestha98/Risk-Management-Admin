@@ -76,12 +76,6 @@ export default function RiskTable() {
         cell: (info) => {
           return (
             <div className="flex gap-2 text-base justify-center">
-              <Switch
-                isToggle
-                onClick={() => handleIsPublic(info?.row?.original?.id)}
-                checked={info?.row?.original?.available}
-                className="bg-gray-300"
-              />
               <AddCourseModal asChild edit editData={info?.row?.original}>
                 <FiEdit2 className="text-[#4365a7] cursor-pointer" />
               </AddCourseModal>

@@ -34,7 +34,7 @@ export const useNotificationData = (
   page = 1
 ) =>
   useQueryData(
-    ["notification", searchText, selectedField, pageSize, page],
+    ["notification"],
     `api/v1/notification/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}`
   );
 
@@ -46,10 +46,20 @@ export const useRiskData = (
 ) =>
   useQueryData(
     ["risk", searchText, selectedField, pageSize, page],
-    `api/v3/risk/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseGroupID=${selectedField}`,
+    `api/v1/risk/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseGroupID=${selectedField}`,
     ""
   );
 
+export const useReportData = (
+  searchText = "",
+  selectedField = "",
+  pageSize = "10",
+  page = 1
+) =>
+  useQueryData(
+    ["report", searchText, selectedField, pageSize, page],
+    `api/v1/report/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseID=${selectedField}`
+  );
 export const useCourseData = (
   searchText = "",
   selectedField = "",

@@ -24,7 +24,7 @@ export default function Notification() {
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const [error, setError] = useState();
-  const { data, isLoading, isError } = useNotificationData("", "", "", "");
+  const { data, isLoading, isError } = useNotificationData();
   const publishNotificationMutation = usePublishNotificationMutation();
 
   const handlePublish = async (id) => {
@@ -111,10 +111,6 @@ export default function Notification() {
         cell: (info) => {
           return (
             <div className="flex gap-2 text-base justify-center">
-              <FiSend
-                onClick={() => handlePublish(info?.row?.original?.id)}
-                className="text-green-600 cursor-pointer"
-              />
               <AddNotificationModal asChild edit editData={info?.row?.original}>
                 <FiEdit2 className="text-[#4365a7] cursor-pointer" />
               </AddNotificationModal>

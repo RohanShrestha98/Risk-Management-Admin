@@ -81,7 +81,7 @@ export default function AddUserModal({
   const onSubmitHandler = async (data) => {
     const postData = {
       ...data,
-      role: selectedRole,
+      RoleID: selectedRole,
     };
     try {
       const response = await userMutation.mutateAsync([
@@ -101,27 +101,26 @@ export default function AddUserModal({
   };
   const roleOptions = [
     {
-      value: "admin",
+      value: 1,
       label: "Admin",
     },
     {
-      value: "analyst",
+      value: 2,
       label: "Analyst",
     },
     {
-      value: "midLevelAnalyst",
+      value: 3,
       label: "Mid Level Analyst",
     },
     {
-      value: "executiveLevelAnalyst",
+      value: 4,
       label: "Executive Level Analyst",
     },
     {
-      value: "ISO",
+      value: 5,
       label: "ISO",
     },
   ];
-  console.log("errors", errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

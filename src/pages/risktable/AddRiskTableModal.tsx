@@ -10,13 +10,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import InputField from "@/ui/InputField";
 import { useForm } from "react-hook-form";
-import { useCourseMutation } from "@/hooks/useMutateData";
+import { useRiskMutation } from "@/hooks/useMutateData";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useCourseGroupData, useUserData } from "@/hooks/useQueryData";
 import toast from "react-hot-toast";
-import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 
 export default function AddRiskTableModal({
@@ -26,16 +24,16 @@ export default function AddRiskTableModal({
   editData,
 }) {
   const [open, setOpen] = useState(false);
-  const { data } = useUserData();
   const [hasSubmittedClick, setHasSubmittedClick] = useState(false);
   const [value, setValue] = useState(edit ? editData?.description : "");
+  const [risk, setRisk] = useState(edit ? editData?.risk : "");
   const [action, setAction] = useState(edit ? editData?.action : "");
   const [error, setError] = useState("");
   const [selectedThreatLevel, setSelectedThreatLevel] = useState(
-    edit ? editData?.threatlevel : 1
+    edit ? editData?.threatlevel : ""
   );
   const [selectedAssignee, setSelectedAssignee] = useState(
-    edit ? editData?.assignee : ""
+    edit ? editData?.assignees : ""
   );
   const [selectedStatus, setSelectedStatus] = useState(
     edit ? editData?.status : ""
@@ -58,9 +56,11 @@ export default function AddRiskTableModal({
     defaultValues: {
       title: editData?.title,
       description: editData?.description,
+      risk: editData?.risk,
       action: editData?.action,
       threatlevel: editData?.threatlevel,
-      createdby: editData?.createdby,
+      assignees: editData?.assignees,
+      status: editData?.status,
     },
   });
 
@@ -69,8 +69,8 @@ export default function AddRiskTableModal({
       threatlevel: editData?.threatlevel,
       title: editData?.title,
       description: editData?.description,
-      createdby: editData?.createdby,
-      assignee: editData?.assignee,
+      risk: editData?.risk,
+      assignees: editData?.assignees,
       status: editData?.status,
       action: editData?.action,
     });
@@ -82,7 +82,6 @@ export default function AddRiskTableModal({
     label: `${i + 1}`,
   }));
 
-  const assigneeOptions = convertToSelectOptions(data);
   const statusOptions = [
     {
       value: "identified",
@@ -113,21 +112,43 @@ export default function AddRiskTableModal({
       label: "Transferred",
     },
   ];
-
-  const courseMutation = useCourseMutation();
+  const roleOptions = [
+    {
+      value: 1,
+      label: "Admin",
+    },
+    {
+      value: 2,
+      label: "Analyst",
+    },
+    {
+      value: 3,
+      label: "Mid Level Analyst",
+    },
+    {
+      value: 4,
+      label: "Executive Level Analyst",
+    },
+    {
+      value: 5,
+      label: "ISO",
+    },
+  ];
+  const riskMutation = useRiskMutation();
 
   const onSubmitHandler = async (data) => {
     const postData = {
       ...data,
       threatlevel: selectedThreatLevel,
-      assignee: selectedAssignee,
+      assignees: selectedAssignee,
       status: selectedStatus,
-      createdby: "userID",
       description: ConvertHtmlToPlainText(value),
+      risk: ConvertHtmlToPlainText(risk),
       action: ConvertHtmlToPlainText(action),
     };
+
     try {
-      const response = await courseMutation.mutateAsync([
+      const response = await riskMutation.mutateAsync([
         edit ? "patch" : "post",
         edit ? `update/${editData?.id}` : "create/",
         postData,
@@ -145,18 +166,30 @@ export default function AddRiskTableModal({
   const handleClear = (e) => {
     e.preventDefault();
     setValue("");
+    setAction("");
+    setRisk("");
     reset();
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  min-w-[500px] bg-[#FAFAFA]">
+      <DialogContent className="sm:max-w-[425px] max-h-[540px] overflow-auto  min-w-[500px] bg-[#FAFAFA]">
         <DialogTitle className="text-[#22244D] font-medium text-base">
           {edit ? "Edit" : "Add"} Risk
         </DialogTitle>
-        <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <div className="flex flex-col gap-4">
+        <form
+          onSubmit={handleSubmit(
+            selectedAssignee &&
+              selectedStatus &&
+              selectedThreatLevel &&
+              value &&
+              risk &&
+              action &&
+              onSubmitHandler
+          )}
+        >
+          <div className="flex flex-col gap-2">
             <div className="">
               <InputField
                 register={register}
@@ -187,20 +220,22 @@ export default function AddRiskTableModal({
                   />
                   <p className="text-red-600 text-xs">
                     {errors?.threatlevel?.message ?? error?.threatlevel}
+                    {hasSubmittedClick && !selectedThreatLevel && "Required"}
                   </p>
                 </div>
                 <div className="w-1/3">
                   <CustomSelect
-                    options={assigneeOptions}
+                    options={roleOptions}
                     label={""}
-                    placeholder={edit ? editData?.assignee : "Select assignee"}
+                    placeholder={edit ? editData?.assignees : "Select assignee"}
                     setSelectedField={setSelectedAssignee}
                     className={"w-full text-sm text-gray-500"}
                     labelName={"Assignee"}
                     required={true}
                   />
                   <p className="text-red-600 text-xs">
-                    {errors?.assignee?.message ?? error?.assignee}
+                    {errors?.assignees?.message ?? error?.assignees}
+                    {hasSubmittedClick && !selectedAssignee && "Required"}
                   </p>
                 </div>
                 <div className="w-1/3">
@@ -215,11 +250,24 @@ export default function AddRiskTableModal({
                   />
                   <p className="text-red-600 text-xs">
                     {errors?.status?.message ?? error?.status}
+                    {hasSubmittedClick && !selectedStatus && "Required"}
                   </p>
                 </div>
               </div>
               <p className="text-[#344054] leading-5 font-medium text-sm my-1">
-                Action
+                Risk <span className="text-red-600">*</span>{" "}
+              </p>
+              <ReactQuill
+                theme="snow"
+                className="h-[70px] mb-10"
+                value={risk}
+                onChange={setRisk}
+              />
+              <p className="text-red-600 text-xs mt-1">
+                {hasSubmittedClick && !risk && "Required"}
+              </p>
+              <p className="text-[#344054] leading-5 font-medium text-sm my-1">
+                Action <span className="text-red-600">*</span>{" "}
               </p>
               <ReactQuill
                 theme="snow"
@@ -227,16 +275,22 @@ export default function AddRiskTableModal({
                 value={action}
                 onChange={setAction}
               />
+              <p className="text-red-600 text-xs mt-1">
+                {hasSubmittedClick && !action && "Required"}
+              </p>
+              <p className="text-[#344054] leading-5 font-medium text-sm my-1">
+                Description <span className="text-red-600">*</span>{" "}
+              </p>
+              <ReactQuill
+                theme="snow"
+                className="h-[70px] mb-10"
+                value={value}
+                onChange={setValue}
+              />
+              <p className="text-red-600 text-xs mt-1">
+                {hasSubmittedClick && !value && "Required"}
+              </p>
             </div>
-            <p className="text-[#344054] leading-5 font-medium text-sm mb-1">
-              Description <span className="text-red-600">*</span>{" "}
-            </p>
-            <ReactQuill
-              theme="snow"
-              className="h-[70px] mb-10"
-              value={value}
-              onChange={setValue}
-            />
           </div>
           <div className="grid grid-cols-2 w-full mt-10 gap-2">
             <Button

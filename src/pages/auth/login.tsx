@@ -42,16 +42,11 @@ const Login = () => {
         refresh: result?.data?.refresh,
         data: result?.data?.user,
       });
-      navigate("/");
       toast.success("Login successfully");
+      navigate("/");
       reset();
     } catch (error) {
-      let errorMessage = error?.response?.data?.error
-        ? error?.response?.data?.message?.toString()
-        : error?.message?.toString();
-      setError(error?.response?.data?.errors);
-      toast.error(error?.response?.data?.errors?.error);
-      console.log("error", errorMessage);
+      console.log("error", error);
     }
   };
 
@@ -82,8 +77,8 @@ const Login = () => {
               className="flex w-full flex-col gap-3 md:px-4 "
             >
               <div className="rounded-md">
-                <p className="text-red-600 text-xs">
-                  {errors?.username?.message ?? error?.username}
+                <p className="text-gray-600 text-sm font-semibold mb-1">
+                  Username <span className="text-red-600">*</span>
                 </p>
                 <LoginInput
                   className="bg-white w-full text-sm"
@@ -92,10 +87,13 @@ const Login = () => {
                   type="text"
                   placeholder="Enter user name"
                 />
+                <p className="text-red-600 text-xs">
+                  {errors?.username?.message ?? error?.username}
+                </p>
               </div>
               <div className="rounded-md">
-                <p className="text-red-600 text-xs">
-                  {errors?.password?.message ?? error?.password}
+                <p className="text-gray-600 text-sm font-semibold mb-1">
+                  Password <span className="text-red-600">*</span>
                 </p>
                 <LoginInput
                   className="bg-white w-full text-sm"
@@ -104,6 +102,9 @@ const Login = () => {
                   type="password"
                   placeholder="Password"
                 />
+                <p className="text-red-600 text-xs">
+                  {errors?.password?.message ?? error?.password}
+                </p>
               </div>
               <div
                 className={`tracking-tight flex gap-2 justify-end sm:my-4 ${

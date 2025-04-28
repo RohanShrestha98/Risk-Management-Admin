@@ -1,12 +1,11 @@
 import SearchPagination from "@/components/SearchPagination";
 import { ReactTable } from "../../components/Table";
 import { useEffect, useMemo, useState } from "react";
-import { useCourseData, useStudentData } from "@/hooks/useQueryData";
+import { useCourseData, useReportData } from "@/hooks/useQueryData";
 import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import { FaPlus } from "react-icons/fa6";
 import AddManualPaymentModal from "./AddManualPaymentModal";
 import { useSearchParams } from "react-router-dom";
-import FilterSearch from "@/components/FilterSearch";
 
 export default function Users() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +17,7 @@ export default function Users() {
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const [selectedField, setSelectedField] = useState("");
-  const { data, isLoading, isError } = useStudentData(
+  const { data, isLoading, isError } = useReportData(
     searchText,
     selectedField,
     pageSize,

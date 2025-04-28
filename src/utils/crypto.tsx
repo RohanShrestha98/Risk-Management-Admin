@@ -19,4 +19,3 @@ export const decryptedData = (ciphertext: string) => {
     );
   return plainText;
 };
-
