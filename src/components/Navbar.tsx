@@ -59,12 +59,12 @@ export default function Navbar() {
                 {data?.data?.map((item, index) => (
                   <div
                     key={index}
-                    className="flex flex-col gap-1 border border-b border-gray-400"
+                    className="flex flex-col border-b border-gray-400"
                   >
                     <h2 className="text-[#4D4D4D] text-base font-semibold">
                       {truncateText(item?.title, 40)}
                     </h2>
-                    <p className="text-[#666666] text-sm font-normal">
+                    <p className="text-[#666666] text-sm font-normal mb-1">
                       {truncateText(item?.description, 100)}
                     </p>
                   </div>
