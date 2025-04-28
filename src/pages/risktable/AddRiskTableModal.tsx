@@ -138,7 +138,7 @@ export default function AddRiskTableModal({
     const postData = {
       ...data,
       threatLevel: selectedAssignee ?? editData?.threatLevel,
-      assignees: selectedAssignee ?? editData?.assignees?.[0]?.id,
+      assignees: [selectedAssignee ?? editData?.assignees?.[0]?.id],
       status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
