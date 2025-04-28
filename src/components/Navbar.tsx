@@ -56,21 +56,19 @@ export default function Navbar() {
                 <p className="text-center my-20">No data to show</p>
               )}
               <div className="flex flex-col gap-2 ">
-                {data?.data
-                  ?.filter((item) => item?.notificationType === active)
-                  ?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col gap-1 border border-b border-gray-400"
-                    >
-                      <h2 className="text-[#4D4D4D] text-base font-semibold">
-                        {truncateText(item?.title, 40)}
-                      </h2>
-                      <p className="text-[#666666] text-sm font-normal">
-                        {truncateText(item?.description, 100)}
-                      </p>
-                    </div>
-                  ))}
+                {data?.data?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-1 border border-b border-gray-400"
+                  >
+                    <h2 className="text-[#4D4D4D] text-base font-semibold">
+                      {truncateText(item?.title, 40)}
+                    </h2>
+                    <p className="text-[#666666] text-sm font-normal">
+                      {truncateText(item?.description, 100)}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
