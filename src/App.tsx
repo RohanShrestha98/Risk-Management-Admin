@@ -29,7 +29,7 @@ function App() {
           <Route path="/my-actions" element={<MyActions />} />
           <Route path="/risk" element={<RiskTable />} />
           <Route path="/task" element={<Task />} />
-          <Route path="/reports" element={<Users />} />
+          <Route path="/risk-details" element={<Users />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/notification" element={<Notification />} />
         </Route>

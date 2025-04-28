@@ -32,7 +32,12 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
     { id: 2, name: "Risk Table", icon: <DiAsterisk />, link: "/risk" },
     { id: 3, name: "Users", icon: <FiUsers />, link: "/user" },
     // { id: 4, name: "Task", icon: <GoTasklist />, link: "/task" },
-    { id: 5, name: "Reports", icon: <TbReportSearch />, link: "/reports" },
+    {
+      id: 5,
+      name: "Risk Details",
+      icon: <TbReportSearch />,
+      link: "/risk-details",
+    },
     { id: 6, name: "Settings", icon: <IoSettingsOutline />, link: "/settings" },
   ];
 

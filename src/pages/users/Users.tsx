@@ -1,10 +1,7 @@
-import SearchPagination from "@/components/SearchPagination";
-import { ReactTable } from "../../components/Table";
-import { useEffect, useMemo, useState } from "react";
-import { useCourseData, useReportData } from "@/hooks/useQueryData";
-import { FaPlus } from "react-icons/fa6";
-import AddManualPaymentModal from "./AddManualPaymentModal";
+import { useEffect, useState } from "react";
+import { useReportData } from "@/hooks/useQueryData";
 import { useSearchParams } from "react-router-dom";
+import { FiFileText } from "react-icons/fi";
 
 export default function Users() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,126 +12,16 @@ export default function Users() {
     searchParams.get("pageSize") ?? "10"
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
-  const [selectedField, setSelectedField] = useState("");
+  const [selectedFile, setSelectedFile] = useState([]);
   const { data, isLoading, isError } = useReportData(
     searchText,
-    selectedField,
+    selectedFile?.id,
     pageSize,
     page
   );
   // const rowType = {
   //     row : string,
   // }
-
-  const columns = useMemo(
-    () => [
-      {
-        accessorFn: (row, index) => index + 1,
-        id: "id",
-        header: () => <span>S.N.</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.firstName,
-        id: "firstName",
-        cell: (info) => {
-          return (
-            <div className="flex items-center gap-1">
-              {" "}
-              <p className="flex items-center gap-1">
-                {info?.row?.original?.firstName === ""
-                  ? "-"
-                  : info?.row?.original?.firstName + " "}
-                {info?.row?.original?.middleName + " "}
-                {info?.row?.original?.lastName}
-              </p>
-            </div>
-          );
-        },
-        // info.getValue(),
-        header: () => <span>Student Name</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.email,
-        id: "email",
-        cell: (info) => {
-          return (
-            <p>
-              {info?.row?.original?.email === ""
-                ? "-"
-                : info?.row?.original?.email}
-            </p>
-          );
-        },
-        header: () => <span>Email</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.phone,
-        id: "phone",
-        cell: (info) => {
-          return (
-            <p>
-              {info?.row?.original?.phoneNumber === ""
-                ? "-"
-                : info?.row?.original?.phoneNumber}
-            </p>
-          );
-        },
-        header: () => <span>Phone Number</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.isVerified,
-        id: "isVerified",
-        cell: (info) => {
-          return (
-            <p
-              className={`inline-block text-xs px-4 cursor-default rounded-full py-[2px] font-medium ${
-                info?.row?.original?.isVerified
-                  ? "text-white bg-[#027A48]"
-                  : "text-white bg-red-500"
-              }`}
-            >
-              {info?.row?.original?.isVerified ? "Verified" : "Not verified"}
-            </p>
-          );
-        },
-        // info.getValue(),
-        header: () => <span>Verified</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.role?.title,
-        id: "role",
-        header: () => <span>Verified</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row,
-        id: "action",
-        cell: (info) => {
-          return (
-            <div className="flex gap-2  justify-center">
-              <AddManualPaymentModal
-                asChild
-                edit
-                editData={info?.row?.original}
-              >
-                <div className="border border-[#4365a7] text-xs font-medium flex items-center gap-1 px-4 py-1 rounded-full cursor-pointer text-[#4365a7] hover:bg-[#4365a7] hover:text-white">
-                  <FaPlus /> Add Payment
-                </div>
-              </AddManualPaymentModal>
-            </div>
-          );
-        },
-        header: () => <span className="flex justify-center">Action</span>,
-        footer: (props) => props.column.id,
-      },
-    ],
-    []
-  );
 
   useEffect(() => {
     const searchQuery = {
@@ -146,24 +33,106 @@ export default function Users() {
   }, [page, pageSize, searchText]);
 
   return (
-    <div className="p-4 flex flex-col gap-4">
-      <div>
-        <SearchPagination
-          totalPage={data?.totalPage}
-          setPage={setPage}
-          page={page}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-        />
-        <ReactTable
-          isLoading={isLoading}
-          isError={isError}
-          columns={columns}
-          data={data ?? []}
-          currentPage={1}
-          totalPage={1}
-          emptyMessage="Oops! No Report available right now."
-        />
+    <div className="flex p-4 gap-4 ">
+      <div className="p-4 w-1/2 border bg-white flex gap-3 justify-between px-5 flex-wrap ">
+        {data?.data?.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className="min-w-[100px] flex flex-col gap-2 items-center text-sm max-w-[100px] border rounded-xl border-gray-400 cursor-pointer bg-gray-100 py-12 hover:bg-slate-200"
+              onClick={() => setSelectedFile(item)}
+            >
+              <div className=" text-gray-600 text-[20px]">
+                <FiFileText />
+              </div>
+              {item?.title}
+            </div>
+          );
+        })}
+      </div>
+      <div className="w-1/2 bg-white border p-4">
+        {!selectedFile ? (
+          <div className="">
+            <div className="flex justify-between mb-6 gap-4">
+              <p className="text-lg font-medium"> {data?.data?.[0]?.title}</p>
+              <div className="text-sm">
+                <p>
+                  <span className="font-semibold">Action : </span>
+                  {data?.data?.[0]?.action}
+                </p>
+                <p>
+                  <span className="font-semibold">Status : </span>
+                  {data?.data?.[0]?.status}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <p className="text-sm">
+                <span className="font-semibold">Created by : </span>{" "}
+                {data?.data?.[0]?.createdby}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">Threat level :</span>{" "}
+                {data?.data?.[0]?.threatlevel}
+              </p>
+            </div>
+
+            <div className="text-sm flex gap-2">
+              <p className="font-semibold">Assignees : </p>
+              <div className="flex gap-2">
+                {data?.data?.[0]?.assignees?.map((item) => {
+                  <p>{item?.username}</p>;
+                })}
+              </div>
+            </div>
+            <p className="text-sm">
+              <span className="font-semibold">Risk :</span>{" "}
+              {data?.data?.[0]?.risk}
+            </p>
+            <p className="text-sm font-semibold mt-4">Description</p>
+            <p className="text-sm">risk : {data?.data?.[0]?.description}</p>
+          </div>
+        ) : (
+          <div className="">
+            <div className="flex justify-between mb-6 gap-4">
+              <p className="text-lg font-medium"> {selectedFile?.title}</p>
+              <div className="text-sm">
+                <p>
+                  <span className="font-semibold">Action : </span>
+                  {selectedFile?.action}
+                </p>
+                <p>
+                  <span className="font-semibold">Status : </span>
+                  {selectedFile?.status}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <p className="text-sm">
+                <span className="font-semibold">Created by : </span>{" "}
+                {selectedFile?.createdby}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">Threat level :</span>{" "}
+                {selectedFile?.threatlevel}
+              </p>
+            </div>
+
+            <div className="text-sm flex gap-2">
+              <p className="font-semibold">Assignees : </p>
+              <div className="flex gap-2">
+                {selectedFile?.assignees?.map((item) => {
+                  <p>{item?.username}</p>;
+                })}
+              </div>
+            </div>
+            <p className="text-sm">
+              <span className="font-semibold">Risk :</span> {selectedFile?.risk}
+            </p>
+            <p className="text-sm font-semibold mt-4">Description</p>
+            <p className="text-sm">risk : {selectedFile?.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );

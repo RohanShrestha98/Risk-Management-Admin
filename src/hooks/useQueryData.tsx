@@ -46,7 +46,7 @@ export const useRiskData = (
 ) =>
   useQueryData(
     ["risk", searchText, selectedField, pageSize, page],
-    `api/v1/risk/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseGroupID=${selectedField}`,
+    `api/v1/risk/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}`,
     ""
   );
 
@@ -58,7 +58,7 @@ export const useReportData = (
 ) =>
   useQueryData(
     ["report", searchText, selectedField, pageSize, page],
-    `api/v1/report/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}&&courseID=${selectedField}`
+    `api/v1/report/list/?page=${page}&&search=${searchText}&&pageSize=${pageSize}`
   );
 export const useCourseData = (
   searchText = "",

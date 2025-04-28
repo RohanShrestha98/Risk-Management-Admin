@@ -45,40 +45,15 @@ export default function RiskTable() {
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.description,
-        id: "description",
-        cell: (info) => {
-          return (
-            <p className="flex items-center gap-1">
-              {truncateText(info?.row?.original?.description, 40)}
-            </p>
-          );
-        },
-        header: () => <span>Description</span>,
-        footer: (props) => props.column.id,
-      },
-      {
         accessorFn: (row) => row?.threatLevel,
         id: "threatLevel",
         header: () => <span>Threat Level</span>,
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.risk,
-        id: "risk",
-        header: () => <span>Risk</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.action,
-        id: "action",
-        header: () => <span>Action</span>,
-        footer: (props) => props.column.id,
-      },
-      {
         accessorFn: (row) => row?.createdBy,
         id: "createdBy",
-        header: () => <span>createdBy</span>,
+        header: () => <span>Created by</span>,
         cell: (info) => {
           return (
             <div className="flex gap-2 text-base justify-center">
