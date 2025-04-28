@@ -1,5 +1,7 @@
 import { useNotificationData } from "@/hooks/useQueryData";
 import CustomSelect from "@/ui/CustomSelect";
+import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
+import truncateText from "@/utils/truncateText";
 import { Pointer } from "lucide-react";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -14,15 +16,10 @@ const notification = [
 
 export default function DashboardNotification() {
   const { data, isLoading, isError } = useNotificationData();
-
   const [active, setActive] = useState("push notification");
 
   return (
     <div className="py-5 bg-white rounded-xl">
-      <div className="px-5 flex justify-between items-center mb-5">
-        <h2 className="text-[#4C4C4C] text-lg font-semibold">Notification</h2>
-        <CustomSelect placeholder="All Users" />
-      </div>
       <div className="flex flex-col gap-5 px-5">
         <div className="flex gap-4">
           <div
@@ -46,32 +43,28 @@ export default function DashboardNotification() {
             Announcements
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-2">
           {data?.data
-            ?.filter((item) => item.notificationType === active)
+            ?.filter((item) => item?.notificationType === active)
             ?.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#F7F9FC] p-4 rounded-xl flex justify-between"
+                className="bg-[#f0f4f8] px-5 py-2 rounded-sm flex justify-between"
               >
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
                   <h2 className="text-[#4D4D4D] text-base font-semibold">
-                    {item.title}
+                    {truncateText(item?.title, 40)}
                   </h2>
                   <p className="text-[#666666] text-sm font-normal">
-                    {item.description}
+                    {truncateText(item?.description, 100)}
                   </p>
-                </div>
-                <div>
-                  <BsThreeDotsVertical
-                    color="#4365a7"
-                    fontSize={18}
-                    cursor="pointer"
-                  />
                 </div>
               </div>
             ))}
         </div>
+        {(active == "announcement" || !data?.data) && (
+          <p className="text-center my-20">No data to show</p>
+        )}
       </div>
     </div>
   );

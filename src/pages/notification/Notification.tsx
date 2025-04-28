@@ -9,9 +9,6 @@ import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import AddNotificationModal from "./AddNotificationModal";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
-import { FiSend } from "react-icons/fi";
-import { usePublishNotificationMutation } from "@/hooks/useMutateData";
-import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 
 export default function Notification() {
@@ -23,22 +20,8 @@ export default function Notification() {
     searchParams.get("pageSize") ?? "10"
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
-  const [error, setError] = useState();
   const { data, isLoading, isError } = useNotificationData();
-  const publishNotificationMutation = usePublishNotificationMutation();
 
-  const handlePublish = async (id) => {
-    try {
-      const response = await publishNotificationMutation.mutateAsync([
-        "post",
-        `${id}`,
-      ]);
-      toast.success("Notification published successfully");
-    } catch (err) {
-      toast.error("error", err?.response?.data?.errors?.error);
-      setError(err?.response?.data?.errors);
-    }
-  };
   const columns = useMemo(
     () => [
       {
@@ -49,7 +32,7 @@ export default function Notification() {
       },
 
       {
-        accessorFn: (row) => row?.name,
+        accessorFn: (row) => row?.title,
         id: "title",
         cell: (info) => {
           return (

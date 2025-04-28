@@ -30,15 +30,12 @@ export default function AddRiskTableModal({
   const [risk, setRisk] = useState(edit ? editData?.risk : "");
   const [action, setAction] = useState(edit ? editData?.action : "");
   const [error, setError] = useState("");
-  const [selectedThreatLevel, setSelectedThreatLevel] = useState(
-    edit ? editData?.threatlevel : ""
-  );
-  const [selectedAssignee, setSelectedAssignee] = useState(
-    edit ? editData?.assignees : ""
-  );
-  const [selectedStatus, setSelectedStatus] = useState(
-    edit ? editData?.status : ""
-  );
+  const [selectedThreatLevel, setSelectedThreatLevel] = useState();
+  edit ? editData?.threatLevel : "";
+  const [selectedAssignee, setSelectedAssignee] = useState();
+  edit ? editData?.assignees?.[0]?.username : "";
+  const [selectedStatus, setSelectedStatus] = useState();
+  edit ? editData?.status : "";
 
   const fieldSchema = Yup.object().shape({
     title: Yup.string()
@@ -59,19 +56,19 @@ export default function AddRiskTableModal({
       description: editData?.description,
       risk: editData?.risk,
       action: editData?.action,
-      threatlevel: editData?.threatlevel,
-      assignees: editData?.assignees,
+      threatLevel: editData?.threatLevel,
+      assignees: editData?.assignees?.[0]?.username,
       status: editData?.status,
     },
   });
 
   useEffect(() => {
     reset({
-      threatlevel: editData?.threatlevel,
+      threatLevel: editData?.threatLevel,
       title: editData?.title,
       description: editData?.description,
       risk: editData?.risk,
-      assignees: editData?.assignees,
+      assignees: editData?.assignees?.[0]?.username,
       status: editData?.status,
       action: editData?.action,
     });
@@ -140,9 +137,9 @@ export default function AddRiskTableModal({
   const onSubmitHandler = async (data) => {
     const postData = {
       ...data,
-      threatlevel: selectedThreatLevel,
-      assignees: selectedAssignee,
-      status: selectedStatus,
+      threatLevel: selectedAssignee ?? editData?.threatLevel,
+      assignees: selectedAssignee ?? editData?.assignees?.[0]?.id,
+      status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
       action: ConvertHtmlToPlainText(action),
@@ -181,13 +178,15 @@ export default function AddRiskTableModal({
         </DialogTitle>
         <form
           onSubmit={handleSubmit(
-            selectedAssignee &&
-              selectedStatus &&
-              selectedThreatLevel &&
-              value &&
-              risk &&
-              action &&
-              onSubmitHandler
+            !edit
+              ? selectedAssignee &&
+                  selectedStatus &&
+                  selectedThreatLevel &&
+                  value &&
+                  risk &&
+                  action &&
+                  onSubmitHandler
+              : onSubmitHandler
           )}
         >
           <div className="flex flex-col gap-2">
@@ -212,7 +211,7 @@ export default function AddRiskTableModal({
                     options={threatlevelOptions}
                     label={""}
                     placeholder={
-                      edit ? editData?.threatlevel : "Select Threat Level"
+                      edit ? editData?.threatLevel : "Select Threat Level"
                     }
                     setSelectedField={setSelectedThreatLevel}
                     className={"w-full text-sm text-gray-500"}
@@ -220,15 +219,22 @@ export default function AddRiskTableModal({
                     required={true}
                   />
                   <p className="text-red-600 text-xs">
-                    {errors?.threatlevel?.message ?? error?.threatlevel}
-                    {hasSubmittedClick && !selectedThreatLevel && "Required"}
+                    {errors?.threatLevel?.message ?? error?.threatLevel}
+                    {hasSubmittedClick &&
+                      !edit &&
+                      !selectedThreatLevel &&
+                      "Required"}
                   </p>
                 </div>
                 <div className="w-1/3">
                   <CustomSelect
                     options={roleOptions}
                     label={""}
-                    placeholder={edit ? editData?.assignees : "Select assignee"}
+                    placeholder={
+                      edit
+                        ? editData?.assignees?.[0]?.username
+                        : "Select assignee"
+                    }
                     setSelectedField={setSelectedAssignee}
                     className={"w-full text-sm text-gray-500"}
                     labelName={"Assignee"}
@@ -236,7 +242,10 @@ export default function AddRiskTableModal({
                   />
                   <p className="text-red-600 text-xs">
                     {errors?.assignees?.message ?? error?.assignees}
-                    {hasSubmittedClick && !selectedAssignee && "Required"}
+                    {hasSubmittedClick &&
+                      !edit &&
+                      !selectedAssignee &&
+                      "Required"}
                   </p>
                 </div>
                 <div className="w-1/3">
@@ -251,7 +260,10 @@ export default function AddRiskTableModal({
                   />
                   <p className="text-red-600 text-xs">
                     {errors?.status?.message ?? error?.status}
-                    {hasSubmittedClick && !selectedStatus && "Required"}
+                    {hasSubmittedClick &&
+                      !edit &&
+                      !selectedStatus &&
+                      "Required"}
                   </p>
                 </div>
               </div>

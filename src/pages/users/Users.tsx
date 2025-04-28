@@ -2,7 +2,6 @@ import SearchPagination from "@/components/SearchPagination";
 import { ReactTable } from "../../components/Table";
 import { useEffect, useMemo, useState } from "react";
 import { useCourseData, useReportData } from "@/hooks/useQueryData";
-import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import { FaPlus } from "react-icons/fa6";
 import AddManualPaymentModal from "./AddManualPaymentModal";
 import { useSearchParams } from "react-router-dom";
@@ -23,8 +22,6 @@ export default function Users() {
     pageSize,
     page
   );
-  const { data: courseData } = useCourseData();
-  const courseOptions = convertToSelectOptions(courseData?.data);
   // const rowType = {
   //     row : string,
   // }
@@ -162,7 +159,7 @@ export default function Users() {
           isLoading={isLoading}
           isError={isError}
           columns={columns}
-          data={data?.data ?? []}
+          data={data ?? []}
           currentPage={1}
           totalPage={1}
           emptyMessage="Oops! No Report available right now."

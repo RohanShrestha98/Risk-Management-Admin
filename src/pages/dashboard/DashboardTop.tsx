@@ -4,45 +4,47 @@ import { FaSackDollar } from "react-icons/fa6";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdSubscriptions } from "react-icons/md";
-
-const items = [
-  {
-    icon: <FaUser color="white" fontSize={14} />,
-    title: "Total Users",
-    amount: 420,
-    percentage: 2,
-    bgColor: "bg-[#7DA8E8]",
-  },
-  {
-    icon: <FaBook color="white" fontSize={14} />,
-    title: "Total Reports",
-    amount: 32,
-    bgColor: "bg-[#7DD3E8]",
-  },
-  {
-    icon: <FaSackDollar color="white" fontSize={15} />,
-    title: "Pending Actions",
-    amount: 20,
-    // percentage: 2,
-    bgColor: "bg-[#E8CD7D]",
-  },
-  {
-    icon: <HiCurrencyDollar color="white" fontSize={18} />,
-    title: "Completed Task",
-    amount: 33,
-    // percentage: -2,
-    bgColor: "bg-[#7DE888]",
-  },
-  {
-    icon: <MdSubscriptions color="white" fontSize={16} />,
-    title: "Risk",
-    amount: <p className="text-red-500">30 %</p>,
-    // percentage: -30,
-    bgColor: "bg-[#E87D7D]",
-  },
-];
+import { useRiskData, useUserData } from "@/hooks/useQueryData";
 
 export default function DashboardTop() {
+  const { data: userData } = useUserData();
+  const { data: riskData } = useRiskData();
+  const items = [
+    {
+      icon: <FaUser color="white" fontSize={14} />,
+      title: "Total Users",
+      amount: userData?.data?.length ?? 420,
+      percentage: 2,
+      bgColor: "bg-[#7DA8E8]",
+    },
+    {
+      icon: <FaBook color="white" fontSize={14} />,
+      title: "Total Risks",
+      amount: riskData?.data?.length ?? 32,
+      bgColor: "bg-[#7DD3E8]",
+    },
+    {
+      icon: <FaSackDollar color="white" fontSize={15} />,
+      title: "Pending Actions",
+      amount: 20,
+      // percentage: 2,
+      bgColor: "bg-[#E8CD7D]",
+    },
+    {
+      icon: <HiCurrencyDollar color="white" fontSize={18} />,
+      title: "Completed Task",
+      amount: 33,
+      // percentage: -2,
+      bgColor: "bg-[#7DE888]",
+    },
+    {
+      icon: <MdSubscriptions color="white" fontSize={16} />,
+      title: "Risk",
+      amount: <p className="text-red-500">30 %</p>,
+      // percentage: -30,
+      bgColor: "bg-[#E87D7D]",
+    },
+  ];
   return (
     <div>
       <div className="grid grid-cols-5 gap-2 ">

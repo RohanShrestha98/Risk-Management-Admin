@@ -62,15 +62,15 @@ const ReactTable = React.forwardRef(
     }, [table?.getSelectedRowModel()]);
 
     return (
-      <div className=" overflow-auto no-scrollbar border pt-16 pb-20 bg-white">
+      <div className=" overflow-auto no-scrollbar border  bg-white">
         {isLoading ? (
           <div className="flex justify-center border w-full">
             <img src={loading} alt="" />
           </div>
         ) : isError ? (
-          <div>Something went wrong</div>
+          <div className="pt-16 pb-20">Something went wrong</div>
         ) : data?.length === 0 ? (
-          <div className="w-full flex justify-center  ">
+          <div className="w-full flex justify-center  pt-16 pb-20">
             <EmptyPage message={emptyMessage} />
           </div>
         ) : (

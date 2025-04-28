@@ -4,6 +4,8 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useRef, useState } from "react";
+import truncateText from "@/utils/truncateText";
+import { useNotificationData } from "@/hooks/useQueryData";
 
 export default function Navbar() {
   const loaction = useLocation();
@@ -11,6 +13,7 @@ export default function Navbar() {
     /[-/]/g,
     " "
   );
+  const { data, isLoading, isError } = useNotificationData();
   const { user } = useAuthStore();
   const [showNotification, setShowNotification] = useState(false);
   const buttonRef = useRef(null);
@@ -49,10 +52,26 @@ export default function Navbar() {
 
           {showNotification && (
             <div className="absolute left-[-60px] mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
-              <h4 className="font-semibold text-gray-800">New Messages!</h4>
-              <p className="text-sm text-gray-600 mt-2">
-                You have 3 unread messages.
-              </p>
+              {!data?.data && (
+                <p className="text-center my-20">No data to show</p>
+              )}
+              <div className="flex flex-col gap-2 ">
+                {data?.data
+                  ?.filter((item) => item?.notificationType === active)
+                  ?.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-1 border border-b border-gray-400"
+                    >
+                      <h2 className="text-[#4D4D4D] text-base font-semibold">
+                        {truncateText(item?.title, 40)}
+                      </h2>
+                      <p className="text-[#666666] text-sm font-normal">
+                        {truncateText(item?.description, 100)}
+                      </p>
+                    </div>
+                  ))}
+              </div>
             </div>
           )}
         </div>

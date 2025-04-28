@@ -20,7 +20,10 @@ export default function AddUserModal({
   edit = false,
   editData,
 }) {
-  const [selectedRole, setSelectedRole] = useState(edit ? editData?.role : "");
+  console.log("editData", editData);
+  const [selectedRole, setSelectedRole] = useState(
+    edit ? editData?.role?.title : ""
+  );
   const [open, setOpen] = useState(false);
   const [hasSubmittedClick, setHasSubmittedClick] = useState(false);
   const [error, setError] = useState("");
@@ -37,7 +40,7 @@ export default function AddUserModal({
       .max(36, "Must be 36 characters or less"),
     email: Yup.string().required("Required"),
     phonenumber: Yup.string().required("Required"),
-    password: Yup.string().required("Required"),
+    // password: Yup.string().required("Required"),
   });
 
   const {
@@ -49,23 +52,23 @@ export default function AddUserModal({
     mode: "onChange",
     resolver: yupResolver(fieldSchema),
     defaultValues: {
-      firstname: editData?.firstname ?? "",
-      lastname: editData?.lastname ?? "",
+      firstname: editData?.firstName ?? "",
+      lastname: editData?.lastName ?? "",
       username: editData?.username ?? "",
-      phonenumber: editData?.phonenumber ?? "",
+      phonenumber: editData?.phoneNumber ?? "",
       email: editData?.email ?? "",
-      password: editData?.password ?? "",
+      role: editData?.role?.title ?? "",
     },
   });
 
   useEffect(() => {
     reset({
-      firstname: editData?.firstname ?? "",
-      lastname: editData?.lastname ?? "",
+      firstname: editData?.firstName ?? "",
+      lastname: editData?.lastName ?? "",
       username: editData?.username ?? "",
-      phonenumber: editData?.phonenumber ?? "",
+      phonenumber: editData?.phoneNumber ?? "",
       email: editData?.email ?? "",
-      password: editData?.password ?? "",
+      role: editData?.role?.title ?? "",
     });
     setError();
   }, [editData, reset, open]);
@@ -81,7 +84,7 @@ export default function AddUserModal({
   const onSubmitHandler = async (data) => {
     const postData = {
       ...data,
-      RoleID: selectedRole,
+      RoleID: selectedRole ?? editData?.role?.id,
     };
     try {
       const response = await userMutation.mutateAsync([
@@ -176,21 +179,23 @@ export default function AddUserModal({
                   {errors?.email?.message ?? error?.email}
                 </p>
               </div>
-              <div className="">
-                <InputField
-                  register={register}
-                  required
-                  name="password"
-                  type="password"
-                  placeholder="Enter password"
-                  className="w-full text-sm text-gray-500"
-                  defaultValue=""
-                  label="Password"
-                />
-                <p className="text-red-600 text-xs">
-                  {errors?.password?.message ?? error?.password}
-                </p>
-              </div>
+              {!edit && (
+                <div className="">
+                  <InputField
+                    register={register}
+                    required
+                    name="password"
+                    type="password"
+                    placeholder="Enter password"
+                    className="w-full text-sm text-gray-500"
+                    defaultValue=""
+                    label="Password"
+                  />
+                  <p className="text-red-600 text-xs">
+                    {errors?.password?.message ?? error?.password}
+                  </p>
+                </div>
+              )}
               <div className="">
                 <InputField
                   register={register}
@@ -209,7 +214,7 @@ export default function AddUserModal({
                 <CustomSelect
                   options={roleOptions}
                   label={""}
-                  placeholder={edit ? editData?.role : "Select role"}
+                  placeholder={edit ? editData?.role?.title : "Select role"}
                   setSelectedField={setSelectedRole}
                   className={"w-full text-sm text-gray-500"}
                   labelName={"Role"}
