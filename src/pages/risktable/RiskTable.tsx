@@ -9,7 +9,6 @@ import AddCourseModal from "./AddRiskTableModal";
 import DeleteModal from "@/components/DeleteModal";
 import truncateText from "@/utils/truncateText";
 import { useSearchParams } from "react-router-dom";
-import { Switch } from "@/components/ui/switch";
 import { useCourseUpdateStatusMutation } from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
 import AddRiskTableModal from "./AddRiskTableModal";
@@ -33,16 +32,6 @@ export default function RiskTable() {
 
   const courseUpdateStatus = useCourseUpdateStatusMutation();
 
-  const handleIsPublic = async (id) => {
-    try {
-      const response = await courseUpdateStatus.mutateAsync(["patch", id, ""]);
-      toast.success("Course availability updated");
-    } catch (error) {
-      error?.response?.data?.errors?.error &&
-        toast.error(error?.response?.data?.errors?.error);
-    }
-  };
-
   const columns = useMemo(
     () => [
       {
@@ -52,9 +41,9 @@ export default function RiskTable() {
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.courseID,
-        id: "destination",
-        header: () => <span>Course ID</span>,
+        accessorFn: (row) => row?.title,
+        id: "title",
+        header: () => <span>Title</span>,
         footer: (props) => props.column.id,
       },
       {
@@ -71,9 +60,47 @@ export default function RiskTable() {
         footer: (props) => props.column.id,
       },
       {
+        accessorFn: (row) => row?.threatLevel,
+        id: "threatLevel",
+        header: () => <span>Threat Level</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.risk,
+        id: "risk",
+        header: () => <span>Risk</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.action,
+        id: "action",
+        header: () => <span>Action</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.createdBy,
+        id: "createdBy",
+        header: () => <span>createdBy</span>,
+        cell: (info) => {
+          return (
+            <div className="flex gap-2 text-base justify-center">
+              {info?.row?.original?.createdBy?.username}
+            </div>
+          );
+        },
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.status,
+        id: "status",
+        header: () => <span>Status</span>,
+        footer: (props) => props.column.id,
+      },
+      {
         accessorFn: (row) => row,
         id: "action",
         cell: (info) => {
+          console.log("info", info);
           return (
             <div className="flex gap-2 text-base justify-center">
               <AddCourseModal asChild edit editData={info?.row?.original}>

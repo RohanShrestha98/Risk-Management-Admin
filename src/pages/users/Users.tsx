@@ -38,8 +38,8 @@ export default function Users() {
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.name,
-        id: "name",
+        accessorFn: (row) => row?.firstName,
+        id: "firstName",
         cell: (info) => {
           return (
             <div className="flex items-center gap-1">
@@ -79,32 +79,38 @@ export default function Users() {
         cell: (info) => {
           return (
             <p>
-              {info?.row?.original?.phone === ""
+              {info?.row?.original?.phoneNumber === ""
                 ? "-"
-                : info?.row?.original?.phone}
+                : info?.row?.original?.phoneNumber}
             </p>
           );
         },
-        header: () => <span>Phone</span>,
+        header: () => <span>Phone Number</span>,
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.verified,
-        id: "verified",
+        accessorFn: (row) => row?.isVerified,
+        id: "isVerified",
         cell: (info) => {
           return (
             <p
               className={`inline-block text-xs px-4 cursor-default rounded-full py-[2px] font-medium ${
-                info?.row?.original?.verified
+                info?.row?.original?.isVerified
                   ? "text-white bg-[#027A48]"
                   : "text-white bg-red-500"
               }`}
             >
-              {info?.row?.original?.verified ? "Verified" : "Not verified"}
+              {info?.row?.original?.isVerified ? "Verified" : "Not verified"}
             </p>
           );
         },
         // info.getValue(),
+        header: () => <span>Verified</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.role?.title,
+        id: "role",
         header: () => <span>Verified</span>,
         footer: (props) => props.column.id,
       },

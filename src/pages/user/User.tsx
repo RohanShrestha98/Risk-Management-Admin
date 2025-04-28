@@ -30,40 +30,79 @@ export default function User() {
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.firstname,
-        id: "firstname",
-        header: () => <span>First Name</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.lastname,
-        id: "lastname",
-        header: () => <span>Last Name</span>,
-        footer: (props) => props.column.id,
-      },
-      {
-        accessorFn: (row) => row?.username,
-        id: "username",
-        header: () => <span>User Name</span>,
+        accessorFn: (row) => row?.firstName,
+        id: "firstName",
+        cell: (info) => {
+          return (
+            <div className="flex items-center gap-1">
+              {" "}
+              <p className="flex items-center gap-1">
+                {info?.row?.original?.firstName === ""
+                  ? "-"
+                  : info?.row?.original?.firstName + " "}
+                {info?.row?.original?.middleName + " "}
+                {info?.row?.original?.lastName}
+              </p>
+            </div>
+          );
+        },
+        // info.getValue(),
+        header: () => <span>Student Name</span>,
         footer: (props) => props.column.id,
       },
       {
         accessorFn: (row) => row?.email,
         id: "email",
+        cell: (info) => {
+          return (
+            <p>
+              {info?.row?.original?.email === ""
+                ? "-"
+                : info?.row?.original?.email}
+            </p>
+          );
+        },
         header: () => <span>Email</span>,
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.phonenumber,
-        id: "phonenumber",
-        cell: (info) => info.getValue(),
-        header: () => <span>Phone number</span>,
+        accessorFn: (row) => row?.phone,
+        id: "phone",
+        cell: (info) => {
+          return (
+            <p>
+              {info?.row?.original?.phoneNumber === ""
+                ? "-"
+                : info?.row?.original?.phoneNumber}
+            </p>
+          );
+        },
+        header: () => <span>Phone Number</span>,
         footer: (props) => props.column.id,
       },
       {
-        accessorFn: (row) => row?.role,
-        id: "role",
+        accessorFn: (row) => row?.isVerified,
+        id: "isVerified",
+        cell: (info) => {
+          return (
+            <p
+              className={`inline-block text-xs px-4 cursor-default rounded-full py-[2px] font-medium ${
+                info?.row?.original?.isVerified
+                  ? "text-white bg-[#027A48]"
+                  : "text-white bg-red-500"
+              }`}
+            >
+              {info?.row?.original?.isVerified ? "Verified" : "Not verified"}
+            </p>
+          );
+        },
         // info.getValue(),
+        header: () => <span>Verified</span>,
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorFn: (row) => row?.role?.title,
+        id: "role",
         header: () => <span>Role</span>,
         footer: (props) => props.column.id,
       },

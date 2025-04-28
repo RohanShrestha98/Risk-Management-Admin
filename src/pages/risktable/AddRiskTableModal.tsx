@@ -23,6 +23,7 @@ export default function AddRiskTableModal({
   edit,
   editData,
 }) {
+  console.log("editData", editData);
   const [open, setOpen] = useState(false);
   const [hasSubmittedClick, setHasSubmittedClick] = useState(false);
   const [value, setValue] = useState(edit ? editData?.description : "");

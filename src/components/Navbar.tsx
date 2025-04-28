@@ -24,6 +24,7 @@ export default function Navbar() {
             size={36}
           />
         </div>
+        <div></div>
         <p className="text-[#4D4D4D] font-medium">
           {user?.data?.username ?? "Sakshii"}
         </p>
