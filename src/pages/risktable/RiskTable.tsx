@@ -23,12 +23,125 @@ export default function RiskTable() {
     searchParams.get("pageSize") ?? "10"
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
-  const { data, isLoading, isError } = useRiskData(
+  const { isLoading, isError } = useRiskData(
     searchText,
     selectedField,
     pageSize,
     page
   );
+
+  const data = [
+    {
+      id: 2,
+      title: "data",
+      description: "this is data risk",
+      threatLevel: 3,
+      risk: "risk",
+      action: "patching",
+      assignees: [
+        {
+          id: 1,
+          username: "sakshi23",
+        },
+      ],
+      status: "mitigation",
+      createdBy: {
+        id: 1,
+        username: "sakshi23",
+      },
+    },
+    {
+      id: 5,
+      title: "Data",
+      description: "this is data",
+      threatLevel: 2,
+      risk: "risk",
+      action: "patching",
+      assignees: [
+        {
+          id: 1,
+          username: "sakshi23",
+        },
+      ],
+      status: "mitigation",
+      createdBy: {
+        id: 1,
+        username: "sakshi23",
+      },
+    },
+    {
+      id: 6,
+      title: "Data",
+      description: "this is data",
+      threatLevel: 2,
+      risk: "risk",
+      action: "patching",
+      assignees: null,
+      status: "mitigation",
+      createdBy: {
+        id: 1,
+        username: "sakshi23",
+      },
+    },
+    {
+      id: 7,
+      title: "Database",
+      description: "database risk",
+      threatLevel: 4,
+      risk: "risk",
+      action: "patching",
+      assignees: [
+        {
+          id: 1,
+          username: "sakshi23",
+        },
+        {
+          id: 3,
+          username: "sakshiacharya11",
+        },
+      ],
+      status: "mitigation",
+      createdBy: {
+        id: 1,
+        username: "sakshi23",
+      },
+    },
+    {
+      id: 8,
+      title: "Database",
+      description: "database risk",
+      threatLevel: 4,
+      risk: "risk",
+      action: "patching",
+      assignees: null,
+      status: "mitigation",
+      createdBy: {
+        id: 1,
+        username: "sakshi23",
+      },
+    },
+    {
+      id: 9,
+      title: "Risk 1",
+      description: "Risk 1",
+      threatLevel: 3,
+      risk: "Risk 1",
+      action: "Risk 1",
+      assignees: [
+        {
+          id: 3,
+          username: "sakshiacharya11",
+        },
+      ],
+      status: "mitigationInProgress",
+      createdBy: {
+        id: 1,
+        username: "sakshi23",
+      },
+    },
+  ];
+
+  console.log("data", data);
 
   const courseUpdateStatus = useCourseUpdateStatusMutation();
 
@@ -98,14 +211,14 @@ export default function RiskTable() {
       },
       {
         accessorFn: (row) => row,
-        id: "action",
+        id: "edit",
         cell: (info) => {
           console.log("info", info);
           return (
             <div className="flex gap-2 text-base justify-center">
-              <AddCourseModal asChild edit editData={info?.row?.original}>
+              <AddRiskTableModal asChild edit editData={info?.row?.original}>
                 <FiEdit2 className="text-[#4365a7] cursor-pointer" />
-              </AddCourseModal>
+              </AddRiskTableModal>
               <DeleteModal
                 asChild
                 desc={"Are you sure you want to delete this action"}
@@ -158,7 +271,7 @@ export default function RiskTable() {
           isLoading={isLoading}
           isError={isError}
           columns={columns}
-          data={data?.data ?? []}
+          data={data ?? []}
           currentPage={1}
           totalPage={1}
           emptyMessage="Oops! No Action available right now."

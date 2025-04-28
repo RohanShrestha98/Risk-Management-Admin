@@ -40,14 +40,13 @@ export default function User() {
                 {info?.row?.original?.firstName === ""
                   ? "-"
                   : info?.row?.original?.firstName + " "}
-                {info?.row?.original?.middleName + " "}
                 {info?.row?.original?.lastName}
               </p>
             </div>
           );
         },
         // info.getValue(),
-        header: () => <span>Student Name</span>,
+        header: () => <span>Name</span>,
         footer: (props) => props.column.id,
       },
       {
@@ -112,9 +111,9 @@ export default function User() {
         cell: (info) => {
           return (
             <div className="flex gap-2 text-base justify-center">
-              <AddInstructorModal asChild edit editData={info?.row?.original}>
+              <AddUserModal asChild edit editData={info?.row?.original}>
                 <FiEdit2 className="text-[#4365a7] cursor-pointer" />
-              </AddInstructorModal>
+              </AddUserModal>
               <DeleteModal
                 asChild
                 desc={"Are you sure you want to delete this User"}
