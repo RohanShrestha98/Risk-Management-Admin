@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useReportData } from "@/hooks/useQueryData";
+import { useReportData, useRiskData } from "@/hooks/useQueryData";
 import { useSearchParams } from "react-router-dom";
 import { FiFileText } from "react-icons/fi";
 
@@ -13,7 +13,7 @@ export default function Users() {
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const [selectedFile, setSelectedFile] = useState([]);
-  const { data, isLoading, isError } = useReportData(
+  const { data, isLoading, isError } = useRiskData(
     searchText,
     selectedFile?.id,
     pageSize,
