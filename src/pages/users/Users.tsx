@@ -152,10 +152,8 @@ export default function Users() {
   }, []);
 
   const { data: riskDetailsData } = useRiskDetailsData(
-    selectedFile?.id ?? data?.data?.[0]?.id
+    selectedFile?.id ?? data?.data?.[0]?.id ?? 1
   );
-
-  console.log("riskDetailsData", riskDetailsData);
 
   const riskData = riskDetailsData?.data ?? data?.data?.[0];
 
