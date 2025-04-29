@@ -40,6 +40,13 @@ export const useAuthSignupMutation = () =>
 export const useUserMutation = () =>
   useMutate(["user"], "api/v1/user/", "multipart/form-data");
 
+export const useChangePasswordMutation = () =>
+  useMutate(
+    ["change_password"],
+    "api/v1/change_password/",
+    "multipart/form-data"
+  );
+
 export const useNotificationMutation = () =>
   useMutate(["notification"], "api/v1/notification/", "multipart/form-data");
 

@@ -46,7 +46,8 @@ const Login = () => {
       navigate("/");
       reset();
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error?.response?.data?.errors);
+      setError(error?.response?.data?.errors);
     }
   };
 
@@ -106,6 +107,7 @@ const Login = () => {
                   {errors?.password?.message ?? error?.password}
                 </p>
               </div>
+              <p className="text-red-600 text-xs">{error?.error}</p>
               <div
                 className={`tracking-tight flex gap-2 justify-end sm:my-4 ${
                   !usingMobile ? "my-2" : " my-5 "
