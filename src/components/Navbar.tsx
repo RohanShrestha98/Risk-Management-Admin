@@ -13,33 +13,8 @@ export default function Navbar() {
     /[-/]/g,
     " "
   );
-  const { isLoading, isError } = useNotificationData();
+  const { data, isLoading, isError } = useNotificationData();
 
-  const data = {
-    success: true,
-    currentPage: 1,
-    totalPage: 1,
-    data: [
-      {
-        id: 2,
-        title: "Hello",
-        description: "<p>Hello this is me rohan shrestha. Have a nice day</p>",
-        notificationType: "push notification",
-        scheduledDate: "2025-04-28T15:32:00Z",
-        risk: null,
-        recipient: "verified",
-      },
-      {
-        id: 3,
-        title: "Iuij",
-        description: "<p>jhnkmsdfsdfsdyugfhsdfhsd8fhs d8 sd8ygfs8df gy</p>",
-        notificationType: "push notification",
-        scheduledDate: "2025-04-10T15:36:00Z",
-        risk: null,
-        recipient: "unverified",
-      },
-    ],
-  };
   const { user } = useAuthStore();
   const [showNotification, setShowNotification] = useState(false);
   const buttonRef = useRef(null);
