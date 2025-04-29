@@ -14,15 +14,13 @@ import {
 export default function UserTrends() {
   const { data: userData } = useUserData();
 
-  const admin = userData?.data?.filter((item) => item?.role?.id == "1");
-  const analyst = userData?.data?.filter((item) => item?.role?.id == "2");
-  const midLevelAnalyst = userData?.data?.filter(
-    (item) => item?.role?.id == "3"
-  );
+  const admin = userData?.data?.filter((item) => item?.role?.id == 1);
+  const analyst = userData?.data?.filter((item) => item?.role?.id == 2);
+  const midLevelAnalyst = userData?.data?.filter((item) => item?.role?.id == 3);
   const executiveLevelAnalyst = userData?.data?.filter(
-    (item) => item?.role?.id == "4"
+    (item) => item?.role?.id == 4
   );
-  const iso = userData?.data?.filter((item) => item?.role?.id == "5");
+  const iso = userData?.data?.filter((item) => item?.role?.id == 5);
 
   const data = [
     {
