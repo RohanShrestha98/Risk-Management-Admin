@@ -68,7 +68,6 @@ export default function PaymentGateway() {
           <ComposedChart
             layout="vertical"
             data={data}
-            className="flex flex-col gap-2"
             barCategoryGap={10}
             barGap={14}
           >
@@ -79,30 +78,32 @@ export default function PaymentGateway() {
               scale="band"
               axisLine={false}
             />
-            <Bar
-              dataKey="Low"
-              barSize={20}
-              fill="#2ECC71"
-              radius={[0, 10, 10, 0]}
-            />
-            <Bar
-              dataKey="Medium"
-              barSize={20}
-              fill="#F1C40F"
-              radius={[0, 10, 10, 0]}
-            />
-            <Bar
-              dataKey="High"
-              barSize={20}
-              fill="#E67E22"
-              radius={[0, 10, 10, 0]}
-            />
-            <Bar
-              dataKey="Critical"
-              barSize={20}
-              fill="#E74C3C"
-              radius={[0, 10, 10, 0]}
-            />
+            <div className="flex flex-col gap-2">
+              <Bar
+                dataKey="Low"
+                barSize={20}
+                fill="#2ECC71"
+                radius={[0, 6, 6, 0]}
+              />
+              <Bar
+                dataKey="Medium"
+                barSize={20}
+                fill="#F1C40F"
+                radius={[0, 6, 6, 0]}
+              />
+              <Bar
+                dataKey="High"
+                barSize={20}
+                fill="#E67E22"
+                radius={[0, 6, 6, 0]}
+              />
+              <Bar
+                dataKey="Critical"
+                barSize={20}
+                fill="#E74C3C"
+                radius={[0, 6, 6, 0]}
+              />
+            </div>
           </ComposedChart>
         </ResponsiveContainer>
       </div>

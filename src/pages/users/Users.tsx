@@ -166,7 +166,7 @@ export default function Users() {
     const doc = new jsPDF("portrait", "px", "a3");
     doc.html(content, {
       callback: function (doc) {
-        doc.save(`risk_details.pdf`);
+        doc.save(`${riskData?.title}.pdf`);
       },
     });
   };
