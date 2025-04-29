@@ -1,7 +1,5 @@
 import { FaUser } from "react-icons/fa";
 import { FaBook } from "react-icons/fa6";
-import { FaSackDollar } from "react-icons/fa6";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdSubscriptions } from "react-icons/md";
 import { useRiskData, useUserData } from "@/hooks/useQueryData";
@@ -9,6 +7,7 @@ import { useRiskData, useUserData } from "@/hooks/useQueryData";
 export default function DashboardTop() {
   const { data: userData } = useUserData();
   const { data: riskData } = useRiskData();
+  const { data: completedRiskData } = useRiskData("", "", "50", "");
   const items = [
     {
       icon: <FaUser color="white" fontSize={14} />,
@@ -32,7 +31,7 @@ export default function DashboardTop() {
     {
       icon: <HiCurrencyDollar color="white" fontSize={18} />,
       title: "Completed Task",
-      amount: 0,
+      amount: completedRiskData?.data?.length ?? 0,
       // percentage: -2,
       bgColor: "bg-[#7DE888]",
     },

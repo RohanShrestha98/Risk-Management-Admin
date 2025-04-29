@@ -108,6 +108,10 @@ export default function AddRiskTableModal({
       label: "Mitigated",
     },
     {
+      value: "opened",
+      label: "Opened",
+    },
+    {
       value: "closed",
       label: "Closed",
     },
