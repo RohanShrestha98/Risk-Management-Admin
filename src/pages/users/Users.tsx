@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useRiskData } from "@/hooks/useQueryData";
+import { useRiskData, useRiskDetailsData } from "@/hooks/useQueryData";
 import { useSearchParams } from "react-router-dom";
 import { FiFileText } from "react-icons/fi";
 import EmptyPage from "@/components/EmptyPage";
@@ -22,6 +22,9 @@ export default function Users() {
     selectedFile?.id,
     pageSize,
     page
+  );
+  const { data: riskDetailsData } = useRiskDetailsData(
+    selectedFile?.id ?? data?.data?.[0]?.id
   );
 
   // const data = [
@@ -147,10 +150,10 @@ export default function Users() {
   // ];
 
   useEffect(() => {
-    setSelectedFile(data?.[0]);
+    setSelectedFile(data?.data?.[0]);
   }, []);
 
-  const riskData = data?.data;
+  const riskData = riskDetailsData;
 
   const columns = useMemo(
     () => [

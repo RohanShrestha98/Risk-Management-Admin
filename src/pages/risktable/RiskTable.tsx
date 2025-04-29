@@ -52,7 +52,7 @@ export default function RiskTable() {
         header: () => <span>Created by</span>,
         cell: (info) => {
           return (
-            <div className="flex gap-2 text-base justify-center">
+            <div className="flex gap-2 text-base ">
               {info?.row?.original?.createdBy?.username}
             </div>
           );

@@ -50,6 +50,13 @@ export const useRiskData = (
     ""
   );
 
+export const useRiskDetailsData = (selectedField = "") =>
+  useQueryData(
+    ["risk", selectedField],
+    `api/v1/risk/details/${selectedField}`,
+    ""
+  );
+
 export const useReportData = (
   searchText = "",
   selectedField = "",
