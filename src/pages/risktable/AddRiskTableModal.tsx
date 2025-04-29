@@ -169,14 +169,14 @@ export default function AddRiskTableModal({
   console.log("selectedAssignee", selectedAssignee);
 
   const onSubmitHandler = async (data) => {
-    const assignees = [];
-    selectedAssignee?.map((item) => assignees?.push(item?.value));
+    // const assignees = [];
+    // selectedAssignee?.map((item) => assignees?.push(item?.value));
     const postData = {
       ...data,
       threatLevel: parseInt(selectedThreatLevel ?? editData?.threatLevel),
       impact: selectedImpact ?? editData?.impact,
       likelihood: selectedlLikelihood ?? editData?.likelihood,
-      assignee: assignees ?? editData?.assignees ?? [1],
+      assignee: [selectedAssignee ?? editData?.assignees],
       status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
