@@ -39,7 +39,7 @@ export default function UserOverview() {
     (item) => item?.status == "evaluated"
   );
   const mitigatedLength = data?.data?.filter(
-    (item) => item?.status == "Mitigated"
+    (item) => item?.status == "mitigated"
   );
   const escalatedLength = data?.data?.filter(
     (item) => item?.status == "escalated"

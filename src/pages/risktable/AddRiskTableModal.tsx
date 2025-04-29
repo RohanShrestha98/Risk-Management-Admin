@@ -17,6 +17,7 @@ import "react-quill/dist/quill.snow.css";
 import toast from "react-hot-toast";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import moment from "moment";
+import { MultiSelect } from "@/ui/MultiSelect";
 
 export default function AddRiskTableModal({
   asChild,
@@ -165,14 +166,17 @@ export default function AddRiskTableModal({
     },
   ];
   const riskMutation = useRiskMutation();
+  console.log("selectedAssignee", selectedAssignee);
 
   const onSubmitHandler = async (data) => {
+    const assignees = [];
+    selectedAssignee?.map((item) => assignees?.push(item?.value));
     const postData = {
       ...data,
-      threatLevel: selectedAssignee ?? editData?.threatLevel,
+      threatLevel: parseInt(selectedThreatLevel ?? editData?.threatLevel),
       impact: selectedImpact ?? editData?.impact,
       likelihood: selectedlLikelihood ?? editData?.likelihood,
-      assignees: [selectedAssignee ?? editData?.assignees?.[0]?.id],
+      assignee: assignees ?? editData?.assignees ?? [1],
       status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
@@ -262,7 +266,7 @@ export default function AddRiskTableModal({
                   </p>
                 </div>
                 <div className="w-1/3">
-                  <CustomSelect
+                  {/* <CustomSelect
                     options={roleOptions}
                     label={""}
                     placeholder={
@@ -274,6 +278,18 @@ export default function AddRiskTableModal({
                     className={"w-full text-sm text-gray-500"}
                     labelName={"Assignee"}
                     required={true}
+                  /> */}
+                  <MultiSelect
+                    placeholder={
+                      edit
+                        ? editData?.assignees?.[0]?.username
+                        : "Select assignee"
+                    }
+                    className={"w-full text-sm text-gray-500"}
+                    labelName={"Assignee"}
+                    options={roleOptions}
+                    selected={selectedAssignee}
+                    setSelected={setSelectedAssignee}
                   />
                   <p className="text-red-600 text-xs">
                     {errors?.assignees?.message ?? error?.assignees}

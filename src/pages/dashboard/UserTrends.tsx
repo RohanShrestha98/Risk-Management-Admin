@@ -31,23 +31,23 @@ export default function UserTrends() {
   const data = [
     {
       name: "Admin",
-      Monthly: admin,
+      Monthly: admin?.length,
     },
     {
       name: "Analyst",
-      Monthly: analyst,
+      Monthly: analyst?.length,
     },
     {
       name: "ML Analyst",
-      Monthly: midLevelAnalyst,
+      Monthly: midLevelAnalyst?.length,
     },
     {
       name: "EL Analyst",
-      Monthly: executiveLevelAnalyst,
+      Monthly: executiveLevelAnalyst?.length,
     },
     {
       name: "ISO",
-      Monthly: iso,
+      Monthly: iso?.length,
     },
   ];
 

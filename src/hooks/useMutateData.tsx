@@ -43,8 +43,7 @@ export const useUserMutation = () =>
 export const useNotificationMutation = () =>
   useMutate(["notification"], "api/v1/notification/", "multipart/form-data");
 
-export const useRiskMutation = () =>
-  useMutate(["risk"], "api/v1/risk/", "multipart/form-data");
+export const useRiskMutation = () => useMutate(["risk"], "api/v1/risk/");
 
 export const useCourseMutation = () =>
   useMutate(["course"], "api/v3/course/", "multipart/form-data");

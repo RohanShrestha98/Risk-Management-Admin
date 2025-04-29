@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRiskData, useRiskDetailsData } from "@/hooks/useQueryData";
 import { useSearchParams } from "react-router-dom";
 import { FiFileText } from "react-icons/fi";
@@ -6,6 +6,7 @@ import EmptyPage from "@/components/EmptyPage";
 import truncateText from "@/utils/truncateText";
 import { ReactTable } from "@/components/Table";
 import { FiDownload } from "react-icons/fi";
+import { jsPDF } from "jspdf";
 
 export default function Users() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -155,6 +156,17 @@ export default function Users() {
 
   const riskData = riskDetailsData?.data ?? data?.data?.[0];
 
+  const pdfRef = useRef(null);
+  const handleDownload = () => {
+    const content = pdfRef.current;
+    const doc = new jsPDF("portrait", "px", "a3");
+    doc.html(content, {
+      callback: function (doc) {
+        doc.save(`${riskData?.title}.pdf`);
+      },
+    });
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -233,12 +245,18 @@ export default function Users() {
           <div className="w-3/5 bg-white border p-4   overflow-auto">
             <p className="flex justify-between items-center border-b mb-3 pb-1 font-bold text-gray-600">
               <p>Risk Details</p>
-              <div className="border border-blue-600 rounded-[4px] text-xs flex gap-1 items-center text-blue-800 px-4 py-1 cursor-pointer mb-1 hover:text-white hover:bg-blue-800">
+              <div
+                onClick={() => handleDownload()}
+                className="border border-blue-600 rounded-[4px] text-xs flex gap-1 items-center text-blue-800 px-4 py-1 cursor-pointer mb-1 hover:text-white hover:bg-blue-800"
+              >
                 <FiDownload className=" text-sm" />
                 <p>Download</p>
               </div>
             </p>
-            <div className="max-h-[70vh] min-h-[400px] overflow-auto">
+            <div
+              ref={pdfRef}
+              className="max-h-[70vh] min-h-[400px] overflow-auto"
+            >
               <div className="flex flex-col gap-2">
                 <p className="text-lg font-medium"> {riskData?.title}</p>
                 <div className="text-xs">

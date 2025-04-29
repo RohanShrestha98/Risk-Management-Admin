@@ -42,7 +42,7 @@ export default function DashboardTop() {
     {
       icon: <MdSubscriptions color="white" fontSize={16} />,
       title: "Risk",
-      amount: <p className="text-red-500">30 %</p>,
+      amount: <p className="text-red-500">0 %</p>,
       // percentage: -30,
       bgColor: "bg-[#E87D7D]",
     },
