@@ -13,7 +13,33 @@ export default function Navbar() {
     /[-/]/g,
     " "
   );
-  const { data, isLoading, isError } = useNotificationData();
+  const { isLoading, isError } = useNotificationData();
+
+  const data = {
+    success: true,
+    currentPage: 1,
+    totalPage: 1,
+    data: [
+      {
+        id: 2,
+        title: "Hello",
+        description: "<p>Hello this is me rohan shrestha. Have a nice day</p>",
+        notificationType: "push notification",
+        scheduledDate: "2025-04-28T15:32:00Z",
+        risk: null,
+        recipient: "verified",
+      },
+      {
+        id: 3,
+        title: "Iuij",
+        description: "<p>jhnkmsdfsdfsdyugfhsdfhsd8fhs d8 sd8ygfs8df gy</p>",
+        notificationType: "push notification",
+        scheduledDate: "2025-04-10T15:36:00Z",
+        risk: null,
+        recipient: "unverified",
+      },
+    ],
+  };
   const { user } = useAuthStore();
   const [showNotification, setShowNotification] = useState(false);
   const buttonRef = useRef(null);
@@ -51,20 +77,23 @@ export default function Navbar() {
           </button>
 
           {showNotification && (
-            <div className="absolute left-[-60px] mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
+            <div className="absolute left-[-60px] mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg py-4 px-3 z-10">
               {!data?.data && (
                 <p className="text-center my-20">No data to show</p>
               )}
-              <div className="flex flex-col gap-2 ">
+              <p className="flex justify-between items-center border-b mb-3 text-sm pb-1 font-bold text-gray-600">
+                Notifications
+              </p>
+              <div className="flex flex-col gap-2">
                 {data?.data?.map((item, index) => (
                   <div
                     key={index}
-                    className="flex flex-col border-b border-gray-400"
+                    className="flex flex-col bg-white shadow-sm border  border-gray-200 rounded-[10px] py-2 px-3 text-sm hover:shadow-md transition-shadow"
                   >
-                    <h2 className="text-[#4D4D4D] text-base font-semibold">
+                    <h2 className="text-gray-800 font-semibold ">
                       {truncateText(item?.title, 40)}
                     </h2>
-                    <p className="text-[#666666] text-sm font-normal mb-1">
+                    <p className="text-gray-500 text-xs font-medium">
                       {truncateText(item?.description, 100)}
                     </p>
                   </div>

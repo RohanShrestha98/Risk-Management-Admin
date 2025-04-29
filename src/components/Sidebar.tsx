@@ -38,7 +38,7 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
       icon: <TbReportSearch />,
       link: "/risk-details",
     },
-    { id: 6, name: "Settings", icon: <IoSettingsOutline />, link: "/settings" },
+    // { id: 6, name: "Settings", icon: <IoSettingsOutline />, link: "/settings" },
   ];
 
   const handleActive = (item) => {
