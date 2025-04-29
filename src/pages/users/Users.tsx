@@ -240,33 +240,31 @@ export default function Users() {
             </p>
             <div className="max-h-[70vh] min-h-[400px] overflow-auto">
               <div className="">
-                <div className="flex justify-between mb-6 gap-4">
-                  <p className="text-lg font-medium"> {riskData?.title}</p>
-                  <div className="text-sm">
-                    <p>
-                      <span className="font-semibold">Action : </span>
-                      {riskData?.action}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Status : </span>
-                      {riskData?.status}
-                    </p>
-                  </div>
+                <p className="text-lg font-medium"> {riskData?.title}</p>
+                <div className="text-sm">
+                  <p>
+                    <span className="font-semibold">Action : </span>
+                    {riskData?.action}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Status : </span>
+                    {riskData?.status}
+                  </p>
                 </div>
                 <p className="text-sm">
                   <span className="font-semibold">Created by : </span>{" "}
-                  {riskData?.createdby}
+                  {riskData?.createdBy}
                 </p>
                 <p className="text-sm">
                   <span className="font-semibold">Threat level :</span>{" "}
-                  {riskData?.threatlevel}
+                  {riskData?.threatLevel}
                 </p>
 
                 <div className="text-sm flex gap-2">
                   <p className="font-semibold">Assignees : </p>
                   <div className="flex gap-2">
                     {riskData?.assignees?.map((item) => {
-                      <p>{item?.username}</p>;
+                      return <p>{item?.username}</p>;
                     })}
                   </div>
                 </div>
