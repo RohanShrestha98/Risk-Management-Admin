@@ -13,27 +13,26 @@ export default function DashboardTop() {
     {
       icon: <FaUser color="white" fontSize={14} />,
       title: "Total Users",
-      amount: userData?.data?.length ?? 420,
-      percentage: 2,
+      amount: userData?.data?.length ?? 0,
       bgColor: "bg-[#7DA8E8]",
     },
     {
       icon: <FaBook color="white" fontSize={14} />,
       title: "Total Risks",
-      amount: riskData?.data?.length ?? 32,
+      amount: riskData?.data?.length ?? 0,
       bgColor: "bg-[#7DD3E8]",
     },
-    {
-      icon: <FaSackDollar color="white" fontSize={15} />,
-      title: "Pending Actions",
-      amount: 20,
-      // percentage: 2,
-      bgColor: "bg-[#E8CD7D]",
-    },
+    // {
+    //   icon: <FaSackDollar color="white" fontSize={15} />,
+    //   title: "Pending Actions",
+    //   amount: 20,
+    //   // percentage: 2,
+    //   bgColor: "bg-[#E8CD7D]",
+    // },
     {
       icon: <HiCurrencyDollar color="white" fontSize={18} />,
       title: "Completed Task",
-      amount: 33,
+      amount: 0,
       // percentage: -2,
       bgColor: "bg-[#7DE888]",
     },
@@ -47,7 +46,7 @@ export default function DashboardTop() {
   ];
   return (
     <div>
-      <div className="grid grid-cols-5 gap-2 ">
+      <div className="grid grid-cols-4 gap-2 ">
         {items?.map((item, index) => (
           <div
             key={index}
