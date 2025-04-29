@@ -64,6 +64,27 @@ export default function Notification() {
       {
         accessorFn: (row) => row?.recipient,
         id: "recipient",
+        ell: (info) => {
+          return (
+            <p className="flex items-center gap-1">
+              {info?.row?.original?.recipient?.map((item) => {
+                return (
+                  <div>
+                    {item == 1
+                      ? "Admin"
+                      : item == 2
+                      ? "Analyst"
+                      : item == 3
+                      ? "Mid Level Analyst"
+                      : item == 4
+                      ? "Executive Level Analyst"
+                      : "ISO"}
+                  </div>
+                );
+              })}
+            </p>
+          );
+        },
         header: () => <span>Recipient</span>,
         footer: (props) => props.column.id,
       },
