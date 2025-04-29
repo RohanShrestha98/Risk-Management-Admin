@@ -35,9 +35,6 @@ export default function AddUserModal({
     lastname: Yup.string()
       .required("Required")
       .max(36, "Must be 36 characters or less"),
-    username: Yup.string()
-      .required("Required")
-      .max(36, "Must be 36 characters or less"),
     email: Yup.string().required("Required"),
     phonenumber: Yup.string().required("Required"),
     // password: Yup.string().required("Required"),
@@ -84,6 +81,7 @@ export default function AddUserModal({
   const onSubmitHandler = async (data) => {
     const postData = {
       ...data,
+      isVerified: true,
       RoleID: selectedRole ?? editData?.role?.id,
     };
     try {
@@ -196,20 +194,6 @@ export default function AddUserModal({
                   </p>
                 </div>
               )}
-              <div className="">
-                <InputField
-                  register={register}
-                  name="username"
-                  placeholder="Enter user Name"
-                  className="w-full text-sm text-gray-500"
-                  defaultValue=""
-                  required={true}
-                  label="User Name"
-                />
-                <p className="text-red-600 text-xs">
-                  {errors?.username?.message ?? error?.username}
-                </p>
-              </div>
               <div>
                 <CustomSelect
                   options={roleOptions}
