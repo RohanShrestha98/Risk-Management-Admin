@@ -251,7 +251,7 @@ export default function Users() {
                     {riskData?.status}
                   </p>
                 </div>
-                <p className="">
+                <p className="text-xs">
                   <span className="font-semibold text-sm">Created by : </span>{" "}
                   {riskData?.createdBy}
                 </p>

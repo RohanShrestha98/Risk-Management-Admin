@@ -32,22 +32,37 @@ export default function UserOverview() {
 
   const { data } = useRiskData();
 
+  const identifiedLength = data?.data?.filter(
+    (item) => item?.status == "identified"
+  );
+  const evaluatedLength = data?.data?.filter(
+    (item) => item?.status == "evaluated"
+  );
+  const mitigatedLength = data?.data?.filter(
+    (item) => item?.status == "Mitigated"
+  );
+  const escalatedLength = data?.data?.filter(
+    (item) => item?.status == "escalated"
+  );
+  const closedLength = data?.data?.filter((item) => item?.status == "closed");
+
   const data01 = [
-    { name: "Free", value: 100 },
-    { name: "Paid", value: 45 },
-    { name: "Active", value: 35 },
-    { name: "Expired", value: 55 },
+    { name: "Identified", value: identifiedLength },
+    { name: "Evaluated", value: evaluatedLength },
+    { name: "Mitigated", value: mitigatedLength },
+    { name: "Escalated", value: escalatedLength },
+    { name: "Closed", value: closedLength },
   ];
-  const COLORS = ["#FDE047", "#1E3A8A", "#22C55E", "#E05252"];
+  const COLORS = ["#FDE047", "#1E3A8A", "#22C55E", "#E05252", "#000000"];
 
   const legends = [
-    { color: "bg-[#FDE047]", name: "Free", amount: 100 },
-    { color: "bg-[#1E3A8A]", name: "Paid", amount: 45 },
-    { color: "bg-[#22C55E]", name: "Active", amount: 35 },
-    { color: "bg-[#E05252]", name: "Expired", amount: 55 },
+    { color: "bg-[#FDE047]", name: "Identified", amount: identifiedLength },
+    { color: "bg-[#1E3A8A]", name: "Evaluated", amount: evaluatedLength },
+    { color: "bg-[#22C55E]", name: "Mitigated", amount: mitigatedLength },
+    { color: "bg-[#E05252]", name: "Escalated", amount: escalatedLength },
+    { color: "bg-[#000000]", name: "Closed", amount: closedLength },
   ];
 
-  const courseOptions = convertToSelectOptions(data?.data);
   return (
     <div className="py-5 bg-white rounded-xl">
       <div className="px-5 flex justify-between items-center">
