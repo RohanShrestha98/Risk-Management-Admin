@@ -82,12 +82,24 @@ export default function AddNotificationModal({
   ];
   const recipientTypeOptions = [
     {
-      label: "Verified",
-      value: "verified",
+      value: 1,
+      label: "Admin",
     },
     {
-      label: "Un Verified",
-      value: "unverified",
+      value: 2,
+      label: "Analyst",
+    },
+    {
+      value: 3,
+      label: "Mid Level Analyst",
+    },
+    {
+      value: 4,
+      label: "Executive Level Analyst",
+    },
+    {
+      value: 5,
+      label: "ISO",
     },
   ];
 
