@@ -50,20 +50,36 @@ export default function UserOverview() {
   console.log("data", data?.data);
 
   const data01 = [
-    { name: "Identified", value: identifiedLength },
-    { name: "Evaluated", value: evaluatedLength },
-    { name: "Mitigated", value: mitigatedLength },
-    { name: "Escalated", value: escalatedLength },
-    { name: "Closed", value: closedLength },
+    { name: "Identified", value: identifiedLength?.length },
+    { name: "Evaluated", value: evaluatedLength?.length },
+    { name: "Mitigated", value: mitigatedLength?.length },
+    { name: "Escalated", value: escalatedLength?.length },
+    { name: "Closed", value: closedLength?.length },
   ];
   const COLORS = ["#FDE047", "#1E3A8A", "#22C55E", "#E05252", "#000000"];
 
   const legends = [
-    { color: "bg-[#FDE047]", name: "Identified", amount: identifiedLength },
-    { color: "bg-[#1E3A8A]", name: "Evaluated", amount: evaluatedLength },
-    { color: "bg-[#22C55E]", name: "Mitigated", amount: mitigatedLength },
-    { color: "bg-[#E05252]", name: "Escalated", amount: escalatedLength },
-    { color: "bg-[#000000]", name: "Closed", amount: closedLength },
+    {
+      color: "bg-[#FDE047]",
+      name: "Identified",
+      amount: identifiedLength?.length,
+    },
+    {
+      color: "bg-[#1E3A8A]",
+      name: "Evaluated",
+      amount: evaluatedLength?.length,
+    },
+    {
+      color: "bg-[#22C55E]",
+      name: "Mitigated",
+      amount: mitigatedLength?.length,
+    },
+    {
+      color: "bg-[#E05252]",
+      name: "Escalated",
+      amount: escalatedLength?.length,
+    },
+    { color: "bg-[#000000]", name: "Closed", amount: closedLength?.length },
   ];
 
   return (
