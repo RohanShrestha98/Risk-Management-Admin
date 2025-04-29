@@ -239,40 +239,41 @@ export default function Users() {
               </div>
             </p>
             <div className="max-h-[70vh] min-h-[400px] overflow-auto">
-              <div className="">
+              <div className="flex flex-col gap-2">
                 <p className="text-lg font-medium"> {riskData?.title}</p>
-                <div className="text-sm">
+                <div className="text-xs">
                   <p>
-                    <span className="font-semibold">Action : </span>
+                    <span className="font-semibold text-sm">Action : </span>
                     {riskData?.action}
                   </p>
                   <p>
-                    <span className="font-semibold">Status : </span>
+                    <span className="font-semibold text-sm">Status : </span>
                     {riskData?.status}
                   </p>
                 </div>
-                <p className="text-sm">
-                  <span className="font-semibold">Created by : </span>{" "}
+                <p className="">
+                  <span className="font-semibold text-sm">Created by : </span>{" "}
                   {riskData?.createdBy}
                 </p>
-                <p className="text-sm">
-                  <span className="font-semibold">Threat level :</span>{" "}
+                <p className="text-xs">
+                  <span className="font-semibold text-sm">Threat level :</span>{" "}
                   {riskData?.threatLevel}
                 </p>
 
-                <div className="text-sm flex gap-2">
-                  <p className="font-semibold">Assignees : </p>
+                <div className="text-xs flex gap-2">
+                  <p className="font-semibold text-sm">Assignees : </p>
                   <div className="flex gap-2">
                     {riskData?.assignees?.map((item) => {
                       return <p>{item?.username}</p>;
                     })}
                   </div>
                 </div>
-                <p className="text-sm">
-                  <span className="font-semibold">Risk :</span> {riskData?.risk}
+                <p className="text-xs">
+                  <span className="font-semibold text-sm">Risk :</span>{" "}
+                  {riskData?.risk}
                 </p>
                 <p className="text-sm font-semibold mt-4">Description</p>
-                <p className="text-sm">{riskData?.description}</p>
+                <p className="text-xs">{riskData?.description}</p>
                 {riskData?.auditLog && (
                   <>
                     <p className="text-sm font-semibold mt-4">Audit Log</p>
