@@ -3,14 +3,19 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useChangePasswordMutation } from "@/hooks/useMutateData";
+import {
+  useAuthMutation,
+  useChangePasswordMutation,
+} from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
 import LoginInput from "@/ui/LoginInput";
 import Button from "@/ui/Button";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Settings() {
   const [active, setActive] = useState(true);
   const [error, setError] = useState(true);
+  const { user } = useAuthStore();
   const fieldSchema = Yup.object().shape({
     oldPassword: Yup.string().required("Required"),
     newPassword: Yup.string()
@@ -35,11 +40,15 @@ export default function Settings() {
   const changePasswordMutation = useChangePasswordMutation();
 
   const onSubmitHandler = async (data) => {
+    const postData = {
+      ...data,
+      userId: user?.id,
+    };
     try {
       const response = await changePasswordMutation.mutateAsync([
         `post`,
         "",
-        data,
+        postData,
       ]);
       toast.success(`Password changed successfully`);
     } catch (err) {
@@ -94,7 +103,7 @@ export default function Settings() {
         </div>
         <div className="rounded-md">
           <p className="text-gray-600 text-sm font-semibold mb-1">
-            New Password <span className="text-red-600">*</span>
+            Confirm Password <span className="text-red-600">*</span>
           </p>
           <LoginInput
             className="bg-white w-full text-sm"
@@ -108,6 +117,9 @@ export default function Settings() {
           </p>
         </div>
       </div>
+      <p className="text-red-600 text-xs">
+        {errors?.confirmPassword?.message ?? error?.error}
+      </p>
       <Button
         buttonName={"Change Password"}
         className={" h-9 w-1/2 text-sm mt-4 font-normal "}
