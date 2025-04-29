@@ -66,23 +66,17 @@ export default function Notification() {
         id: "recipient",
         ell: (info) => {
           return (
-            <p className="flex items-center gap-1">
-              {info?.row?.original?.recipient?.map((item) => {
-                return (
-                  <div>
-                    {item == 1
-                      ? "Admin"
-                      : item == 2
-                      ? "Analyst"
-                      : item == 3
-                      ? "Mid Level Analyst"
-                      : item == 4
-                      ? "Executive Level Analyst"
-                      : "ISO"}
-                  </div>
-                );
-              })}
-            </p>
+            <div>
+              {info?.row?.original?.recipient == 1
+                ? "Admin"
+                : info?.row?.original?.recipient == 2
+                ? "Analyst"
+                : info?.row?.original?.recipient == 3
+                ? "Mid Level Analyst"
+                : info?.row?.original?.recipient == 4
+                ? "Executive Level Analyst"
+                : "ISO"}
+            </div>
           );
         },
         header: () => <span>Recipient</span>,
