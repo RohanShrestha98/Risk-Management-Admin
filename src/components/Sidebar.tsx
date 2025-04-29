@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import LogoutModal from "./LogoutModal";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { DiAsterisk } from "react-icons/di";
 import { FiUsers } from "react-icons/fi";
 import { TbReportSearch } from "react-icons/tb";
@@ -43,7 +43,7 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
       icon: <TbReportSearch />,
       link: "/risk-details",
     },
-    // { id: 6, name: "Settings", icon: <IoSettingsOutline />, link: "/settings" },
+    { id: 6, name: "Settings", icon: <IoSettingsOutline />, link: "/settings" },
   ];
 
   const handleActive = (item) => {

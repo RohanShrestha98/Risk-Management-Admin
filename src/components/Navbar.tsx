@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import profile from "../assets/profile.svg";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
@@ -13,6 +13,7 @@ export default function Navbar() {
     /[-/]/g,
     " "
   );
+  const navigate = useNavigate();
   const { data, isLoading, isError } = useNotificationData();
 
   const { user } = useAuthStore();
@@ -79,13 +80,13 @@ export default function Navbar() {
             </div>
           )}
         </div>
-        <div></div>
         <p className="text-[#4D4D4D] font-medium">
           {user?.data?.username ?? "Sakshii"}
         </p>
         <img
+          onClick={() => navigate("/settings")}
           src={profile}
-          className="w-9 h-9 rounded-full object-cover"
+          className="w-9 h-9 cursor-pointer rounded-full object-cover"
           alt=""
         />
       </div>
