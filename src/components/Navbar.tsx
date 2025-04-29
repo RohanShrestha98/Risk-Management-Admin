@@ -56,9 +56,11 @@ export default function Navbar() {
               {!data?.data && (
                 <p className="text-center my-20">No data to show</p>
               )}
-              <p className="flex justify-between items-center border-b mb-3 text-sm pb-1 font-bold text-gray-600">
-                Notifications
-              </p>
+              {data?.data && (
+                <p className="flex justify-between items-center border-b mb-3 text-sm pb-1 font-bold text-gray-600">
+                  Notifications
+                </p>
+              )}
               <div className="flex flex-col gap-2">
                 {data?.data?.map((item, index) => (
                   <div

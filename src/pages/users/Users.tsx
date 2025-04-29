@@ -153,7 +153,7 @@ export default function Users() {
     setSelectedFile(data?.data?.[0]);
   }, []);
 
-  const riskData = riskDetailsData;
+  const riskData = riskDetailsData?.data ?? data?.data?.[0];
 
   const columns = useMemo(
     () => [
@@ -202,14 +202,14 @@ export default function Users() {
 
   return (
     <div>
-      {riskData ? (
+      {data?.data ? (
         <div className="flex p-4 gap-4">
           <div className="p-4 w-2/5 border bg-white px-5 ">
             <p className="border-b mb-3 pb-1 font-bold text-gray-600">
               Risk List
             </p>
             <div className=" flex gap-3  flex-wrap ">
-              {riskData?.map((item, index) => {
+              {data?.data?.map((item, index) => {
                 return (
                   <div
                     key={index}
@@ -239,115 +239,55 @@ export default function Users() {
               </div>
             </p>
             <div className="max-h-[70vh] min-h-[400px] overflow-auto">
-              {!selectedFile ? (
-                <div className="">
-                  <div className="flex justify-between mb-6 gap-4">
-                    <p className="text-lg font-medium">
-                      {" "}
-                      {riskData?.[0]?.title}
+              <div className="">
+                <div className="flex justify-between mb-6 gap-4">
+                  <p className="text-lg font-medium"> {riskData?.title}</p>
+                  <div className="text-sm">
+                    <p>
+                      <span className="font-semibold">Action : </span>
+                      {riskData?.action}
                     </p>
-                    <div className="text-sm">
-                      <p>
-                        <span className="font-semibold">Action : </span>
-                        {riskData?.[0]?.action}
-                      </p>
-                      <p>
-                        <span className="font-semibold">Status : </span>
-                        {riskData?.[0]?.status}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-sm">
-                    <span className="font-semibold">Created by : </span>{" "}
-                    {riskData?.[0]?.createdby}
-                  </p>
-                  <p className="text-sm">
-                    <span className="font-semibold">Threat level :</span>{" "}
-                    {riskData?.[0]?.threatlevel}
-                  </p>
-
-                  <div className="text-sm flex gap-2">
-                    <p className="font-semibold">Assignees : </p>
-                    <div className="flex gap-2">
-                      {riskData?.[0]?.assignees?.map((item) => {
-                        <p>{item?.username}</p>;
-                      })}
-                    </div>
-                  </div>
-                  <p className="text-sm">
-                    <span className="font-semibold">Risk :</span>{" "}
-                    {riskData?.[0]?.risk}
-                  </p>
-                  <p className="text-sm font-semibold mt-4">Description</p>
-                  <p className="text-sm">{riskData?.[0]?.description}</p>
-                  {riskData?.[0]?.auditLog && (
-                    <>
-                      <p className="text-sm font-semibold mt-4">Audit Log</p>
-                      <ReactTable
-                        columns={columns}
-                        data={riskData?.[0]?.auditLog ?? []}
-                        currentPage={1}
-                        totalPage={1}
-                        emptyMessage="Oops! No auditLog available right now."
-                      />
-                    </>
-                  )}
-                </div>
-              ) : (
-                <div className="">
-                  <div className="flex justify-between mb-6 gap-4">
-                    <p className="text-lg font-medium">
-                      {" "}
-                      {selectedFile?.title}
+                    <p>
+                      <span className="font-semibold">Status : </span>
+                      {riskData?.status}
                     </p>
-                    <div className="text-sm">
-                      <p>
-                        <span className="font-semibold">Action : </span>
-                        {selectedFile?.action}
-                      </p>
-                      <p>
-                        <span className="font-semibold">Status : </span>
-                        {selectedFile?.status}
-                      </p>
-                    </div>
                   </div>
-                  <p className="text-sm">
-                    <span className="font-semibold">Created by : </span>{" "}
-                    {selectedFile?.createdby}
-                  </p>
-                  <p className="text-sm">
-                    <span className="font-semibold">Threat level :</span>{" "}
-                    {selectedFile?.threatlevel}
-                  </p>
-
-                  <div className="text-sm flex gap-2">
-                    <p className="font-semibold">Assignees : </p>
-                    <div className="flex gap-2">
-                      {selectedFile?.assignees?.map((item) => {
-                        <p>{item?.username}</p>;
-                      })}
-                    </div>
-                  </div>
-                  <p className="text-sm">
-                    <span className="font-semibold">Risk :</span>{" "}
-                    {selectedFile?.risk}
-                  </p>
-                  <p className="text-sm font-semibold mt-4">Description</p>
-                  <p className="text-sm">{selectedFile?.description}</p>
-                  {selectedFile?.auditLog && (
-                    <>
-                      <p className="text-sm font-semibold mt-4">Audit Log</p>
-                      <ReactTable
-                        columns={columns}
-                        data={selectedFile?.auditLog ?? []}
-                        currentPage={1}
-                        totalPage={1}
-                        emptyMessage="Oops! No auditLog available right now."
-                      />
-                    </>
-                  )}
                 </div>
-              )}
+                <p className="text-sm">
+                  <span className="font-semibold">Created by : </span>{" "}
+                  {riskData?.createdby}
+                </p>
+                <p className="text-sm">
+                  <span className="font-semibold">Threat level :</span>{" "}
+                  {riskData?.threatlevel}
+                </p>
+
+                <div className="text-sm flex gap-2">
+                  <p className="font-semibold">Assignees : </p>
+                  <div className="flex gap-2">
+                    {riskData?.assignees?.map((item) => {
+                      <p>{item?.username}</p>;
+                    })}
+                  </div>
+                </div>
+                <p className="text-sm">
+                  <span className="font-semibold">Risk :</span> {riskData?.risk}
+                </p>
+                <p className="text-sm font-semibold mt-4">Description</p>
+                <p className="text-sm">{riskData?.description}</p>
+                {riskData?.auditLog && (
+                  <>
+                    <p className="text-sm font-semibold mt-4">Audit Log</p>
+                    <ReactTable
+                      columns={columns}
+                      data={riskData?.auditLog ?? []}
+                      currentPage={1}
+                      totalPage={1}
+                      emptyMessage="Oops! No auditLog available right now."
+                    />
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

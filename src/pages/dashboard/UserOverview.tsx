@@ -1,4 +1,4 @@
-import { useCourseData } from "@/hooks/useQueryData";
+import { useRiskData } from "@/hooks/useQueryData";
 import CustomSelect from "@/ui/CustomSelect";
 import { convertToSelectOptions } from "@/utils/convertToSelectOptions";
 import {
@@ -9,21 +9,6 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-
-const data01 = [
-  { name: "Free", value: 100 },
-  { name: "Paid", value: 45 },
-  { name: "Active", value: 35 },
-  { name: "Expired", value: 55 },
-];
-const COLORS = ["#FDE047", "#1E3A8A", "#22C55E", "#E05252"];
-
-const legends = [
-  { color: "bg-[#FDE047]", name: "Free", amount: 100 },
-  { color: "bg-[#1E3A8A]", name: "Paid", amount: 45 },
-  { color: "bg-[#22C55E]", name: "Active", amount: 35 },
-  { color: "bg-[#E05252]", name: "Expired", amount: 55 },
-];
 
 export default function UserOverview() {
   const CustomLegend = () => (
@@ -45,7 +30,23 @@ export default function UserOverview() {
     </div>
   );
 
-  const { data } = useCourseData();
+  const { data } = useRiskData();
+
+  const data01 = [
+    { name: "Free", value: 100 },
+    { name: "Paid", value: 45 },
+    { name: "Active", value: 35 },
+    { name: "Expired", value: 55 },
+  ];
+  const COLORS = ["#FDE047", "#1E3A8A", "#22C55E", "#E05252"];
+
+  const legends = [
+    { color: "bg-[#FDE047]", name: "Free", amount: 100 },
+    { color: "bg-[#1E3A8A]", name: "Paid", amount: 45 },
+    { color: "bg-[#22C55E]", name: "Active", amount: 35 },
+    { color: "bg-[#E05252]", name: "Expired", amount: 55 },
+  ];
+
   const courseOptions = convertToSelectOptions(data?.data);
   return (
     <div className="py-5 bg-white rounded-xl">
