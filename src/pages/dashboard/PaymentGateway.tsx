@@ -10,23 +10,31 @@ import {
 import dashCash from "../../assets/dashDollar.png";
 import dashKhalti from "../../assets/dashKhalti.png";
 import dasheSewa from "../../assets/dasheSewa.png";
-
-const data = [
-  {
-    name: "Payment Gateway",
-    Cash: 35,
-    Khalti: 20,
-    eSewa: 40,
-  },
-];
-
-const legends = [
-  { image: dashCash, name: "Cash", amount: 35 },
-  { image: dashKhalti, name: "Khalti", amount: 20 },
-  { image: dasheSewa, name: "eSewa", amount: 40 },
-];
+import { useRiskData } from "@/hooks/useQueryData";
 
 export default function PaymentGateway() {
+  const { data: riskData } = useRiskData();
+  const low = riskData?.data?.filter((item) => item?.impact == "Low");
+  const medium = riskData?.data?.filter((item) => item?.impact == "Medium");
+  const high = riskData?.data?.filter((item) => item?.impact == "High");
+  const critical = riskData?.data?.filter((item) => item?.impact == "Critical");
+
+  const data = [
+    {
+      name: "Impact",
+      Low: low?.length,
+      Medium: medium?.length,
+      High: high?.length,
+      Critical: critical?.length,
+    },
+  ];
+
+  const legends = [
+    { name: "Low", amount: 35 },
+    { name: "Medium", amount: 20 },
+    { name: "High", amount: 40 },
+    { name: "Critical", amount: 40 },
+  ];
   // Custom legend component
   const CustomLegend = () => (
     <div className="flex gap-2 justify-center">
@@ -36,7 +44,7 @@ export default function PaymentGateway() {
           key={index}
         >
           <div className="flex items-center gap-1">
-            <img src={item.image} alt="" />
+            <img src={item?.image} alt="" />
             <p className="text-[#808080] font-medium text-sm">{item.name}</p>
           </div>
           <p className="text-[#4C4C4C] font-semibold text-base">
@@ -49,9 +57,7 @@ export default function PaymentGateway() {
 
   return (
     <div className="p-5 bg-white rounded-xl">
-      <h2 className="text-[#4C4C4C] text-lg font-semibold mb-5">
-        Rating Breakdown
-      </h2>
+      <h2 className="text-[#4C4C4C] text-lg font-semibold mb-5">Impact</h2>
       <div className="-ml-14">
         <ResponsiveContainer width="100%" height={150}>
           <ComposedChart
@@ -68,19 +74,25 @@ export default function PaymentGateway() {
               axisLine={false}
             />
             <Bar
-              dataKey="Cash"
+              dataKey="Low"
               barSize={20}
               fill="#F28D20"
               radius={[0, 10, 10, 0]}
             />
             <Bar
-              dataKey="Khalti"
+              dataKey="Medium"
               barSize={20}
               fill="#5C2D91"
               radius={[0, 10, 10, 0]}
             />
             <Bar
-              dataKey="eSewa"
+              dataKey="High"
+              barSize={20}
+              fill="#60BB47"
+              radius={[0, 10, 10, 0]}
+            />
+            <Bar
+              dataKey="Critical"
               barSize={20}
               fill="#60BB47"
               radius={[0, 10, 10, 0]}

@@ -14,9 +14,9 @@ export default function Dashboard() {
         {/* <RecentPayment /> */}
         <DashboardNotification />
       </div>
-      <div className="grid grid-cols-[35%_40%_25%] gap-2 ">
+      <div className="grid grid-cols-2 gap-2 ">
         <UserTrends />
-        <DashboardPayment />
+        {/* <DashboardPayment /> */}
         <PaymentGateway />
       </div>
     </div>

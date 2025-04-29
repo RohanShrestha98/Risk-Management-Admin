@@ -1,3 +1,4 @@
+import { useRiskData, useUserData } from "@/hooks/useQueryData";
 import React, { PureComponent } from "react";
 import {
   LineChart,
@@ -10,58 +11,44 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Jan",
-    Monthly: 4000,
-    Daily: 2400,
-    Yearly: 2400,
-  },
-  {
-    name: "Feb",
-    Monthly: 3000,
-    Daily: 1398,
-    Yearly: 2210,
-  },
-  {
-    name: "Mar",
-    Monthly: 2000,
-    Daily: 9800,
-    Yearly: 2290,
-  },
-  {
-    name: "Apr",
-    Monthly: 2780,
-    Daily: 3908,
-    Yearly: 2000,
-  },
-  {
-    name: "May",
-    Monthly: 1890,
-    Daily: 4800,
-    Yearly: 2181,
-  },
-  {
-    name: "Jun",
-    Monthly: 2390,
-    Daily: 3800,
-    Yearly: 2500,
-  },
-  {
-    name: "Jul",
-    Monthly: 3490,
-    Daily: 4300,
-    Yearly: 2100,
-  },
-];
-
-const legends = [
-  { color: "bg-[#4365a7]", name: "Daily" },
-  { color: "bg-[#4D8AFF]", name: "Monthly" },
-  { color: "bg-[#ABBCDD]", name: "Yearly" },
-];
-
 export default function UserTrends() {
+  const { data: userData } = useUserData();
+
+  const admin = userData?.data?.filter((item) => item?.role?.id == "1");
+  const analyst = userData?.data?.filter((item) => item?.role?.id == "2");
+  const midLevelAnalyst = userData?.data?.filter(
+    (item) => item?.role?.id == "3"
+  );
+  const executiveLevelAnalyst = userData?.data?.filter(
+    (item) => item?.role?.id == "4"
+  );
+  const iso = userData?.data?.filter((item) => item?.role?.id == "5");
+
+  const data = [
+    {
+      name: "Admin",
+      Monthly: admin,
+    },
+    {
+      name: "Analyst",
+      Monthly: analyst,
+    },
+    {
+      name: "ML Analyst",
+      Monthly: midLevelAnalyst,
+    },
+    {
+      name: "EL Analyst",
+      Monthly: executiveLevelAnalyst,
+    },
+    {
+      name: "ISO",
+      Monthly: iso,
+    },
+  ];
+
+  const legends = [{ color: "bg-[#4D8AFF]", name: "Monthly" }];
+
   const CustomLegend = () => (
     <div className="flex gap-2 items-center">
       {legends.map((item, index) => (
@@ -98,22 +85,8 @@ export default function UserTrends() {
             {/* <Tooltip /> */}
             <Line
               type="monotone"
-              dataKey="Daily"
-              stroke="#4365a7"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              type="monotone"
               dataKey="Monthly"
               stroke="#4D8AFF"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              type="monotone"
-              dataKey="Yearly"
-              stroke="#ABBCDD"
               strokeWidth={2}
               dot={false}
             />

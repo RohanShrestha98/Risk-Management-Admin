@@ -15,7 +15,6 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
   const [active, setActive] = useState(window.location.pathname);
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  console.log("user", user?.data?.role);
   const role = user?.data?.role?.id;
 
   useEffect(() => {
