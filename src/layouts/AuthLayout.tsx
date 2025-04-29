@@ -11,7 +11,7 @@ const AuthLayout = () => {
             Risk Register <br /> App
           </p>
         </div>
-        <div className="md:w-full w-1/2 h-screen">
+        <div className="md:w-full w-1/2 h-screen overflow-auto pb-10">
           <Outlet />
         </div>
       </div>

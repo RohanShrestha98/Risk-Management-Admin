@@ -14,10 +14,10 @@ import { useRiskData } from "@/hooks/useQueryData";
 
 export default function PaymentGateway() {
   const { data: riskData } = useRiskData();
-  const low = riskData?.data?.filter((item) => item?.impact == "Low");
-  const medium = riskData?.data?.filter((item) => item?.impact == "Medium");
-  const high = riskData?.data?.filter((item) => item?.impact == "High");
-  const critical = riskData?.data?.filter((item) => item?.impact == "Critical");
+  const low = riskData?.data?.filter((item) => item?.impact == "low");
+  const medium = riskData?.data?.filter((item) => item?.impact == "medium");
+  const high = riskData?.data?.filter((item) => item?.impact == "high");
+  const critical = riskData?.data?.filter((item) => item?.impact == "critical");
 
   const data = [
     {
@@ -30,10 +30,10 @@ export default function PaymentGateway() {
   ];
 
   const legends = [
-    { name: "Low", amount: 35 },
-    { name: "Medium", amount: 20 },
-    { name: "High", amount: 40 },
-    { name: "Critical", amount: 40 },
+    { name: "Low", amount: low?.length },
+    { name: "Medium", amount: medium?.length },
+    { name: "High", amount: high?.length },
+    { name: "Critical", amount: critical?.length },
   ];
   // Custom legend component
   const CustomLegend = () => (

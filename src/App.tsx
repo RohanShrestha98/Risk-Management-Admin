@@ -9,6 +9,7 @@ import RiskTable from "./pages/risktable/RiskTable";
 import User from "./pages/user/User";
 import Settings from "./pages/settings/Settings";
 import Notification from "./pages/notification/Notification";
+import SignUp from "./pages/auth/signup";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
         </Route>
 
         <Route element={<BaseLayout />}>

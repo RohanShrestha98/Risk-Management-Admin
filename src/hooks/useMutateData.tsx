@@ -35,7 +35,7 @@ export const useMutate = (
 export const useAuthMutation = () => useMutate(["auth"], "auth/v1/login/");
 
 export const useAuthSignupMutation = () =>
-  useMutate(["signup"], "auth/v3/register");
+  useMutate(["signup"], "api/v1/user/create/");
 
 export const useUserMutation = () =>
   useMutate(["user"], "api/v1/user/", "multipart/form-data");
