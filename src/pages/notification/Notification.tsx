@@ -64,7 +64,7 @@ export default function Notification() {
       {
         accessorFn: (row) => row?.recipient,
         id: "recipient",
-        ell: (info) => {
+        cell: (info) => {
           return (
             <div>
               {info?.row?.original?.recipient == "1"
