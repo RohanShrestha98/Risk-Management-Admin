@@ -44,7 +44,6 @@ export default function AddRiskTableModal({
     title: Yup.string()
       .required("Required")
       .max(50, "Must be 36 characters or less"),
-    deadline: Yup.string().required("Required"),
   });
 
   const {
@@ -301,8 +300,8 @@ export default function AddRiskTableModal({
                   </p>
                 </div>
               </div>
-              <div className="flex justify-between gap-2 mt-2">
-                <div className="w-1/3">
+              <div className="flex  gap-2 mt-2">
+                <div className="w-1/2">
                   <CustomSelect
                     options={impactOptions}
                     label={""}
@@ -320,7 +319,7 @@ export default function AddRiskTableModal({
                       "Required"}
                   </p>
                 </div>
-                <div className="w-1/3">
+                <div className="w-1/2">
                   <CustomSelect
                     options={impactOptions}
                     label={""}
@@ -340,29 +339,13 @@ export default function AddRiskTableModal({
                       "Required"}
                   </p>
                 </div>
-                <div className="w-1/3">
-                  <div className="">
-                    <InputField
-                      type="datetime-local"
-                      register={register}
-                      name="deadline"
-                      className="w-full text-sm text-gray-500"
-                      defaultValue=""
-                      required
-                      label="Deadline"
-                    />
-                    <p className="text-red-600 text-xs">
-                      {errors?.deadline?.message ?? error?.deadline}
-                    </p>
-                  </div>
-                </div>
               </div>
               <p className="text-[#344054] leading-5 font-medium text-sm my-1">
                 Risk <span className="text-red-600">*</span>{" "}
               </p>
               <ReactQuill
                 theme="snow"
-                className="h-[70px] mb-10"
+                className="h-[70px] mb-10 w-100"
                 value={risk}
                 onChange={setRisk}
               />
@@ -374,7 +357,7 @@ export default function AddRiskTableModal({
               </p>
               <ReactQuill
                 theme="snow"
-                className="h-[70px] mb-10"
+                className="h-[70px] mb-10 w-100"
                 value={action}
                 onChange={setAction}
               />
@@ -393,6 +376,21 @@ export default function AddRiskTableModal({
               <p className="text-red-600 text-xs mt-1">
                 {hasSubmittedClick && !value && "Required"}
               </p>
+              <div className="w-1/2">
+                <div className="">
+                  <InputField
+                    type="datetime-local"
+                    register={register}
+                    name="deadline"
+                    className="w-full text-sm text-gray-500"
+                    defaultValue=""
+                    label="Deadline"
+                  />
+                  <p className="text-red-600 text-xs">
+                    {errors?.deadline?.message ?? error?.deadline}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-2 w-full mt-10 gap-2">
