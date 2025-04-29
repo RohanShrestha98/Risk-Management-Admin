@@ -176,7 +176,7 @@ export default function AddRiskTableModal({
       threatLevel: parseInt(selectedThreatLevel ?? editData?.threatLevel),
       impact: selectedImpact ?? editData?.impact,
       likelihood: selectedlLikelihood ?? editData?.likelihood,
-      assignee: [selectedAssignee ?? editData?.assignees],
+      assignee: selectedAssignee ?? editData?.assignees?.[0]?.id,
       status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
