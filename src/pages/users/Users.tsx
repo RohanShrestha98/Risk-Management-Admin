@@ -24,9 +24,6 @@ export default function Users() {
     pageSize,
     page
   );
-  const { data: riskDetailsData } = useRiskDetailsData(
-    selectedFile?.id ?? data?.data?.[0]?.id
-  );
 
   // const data = [
   //   {
@@ -153,6 +150,10 @@ export default function Users() {
   useEffect(() => {
     setSelectedFile(data?.data?.[0]);
   }, []);
+
+  const { data: riskDetailsData } = useRiskDetailsData(
+    selectedFile?.id ?? data?.data?.[0]?.id
+  );
 
   const riskData = riskDetailsData?.data ?? data?.data?.[0];
 
