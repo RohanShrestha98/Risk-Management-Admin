@@ -5,12 +5,8 @@ import TopButton from "@/components/TopButton";
 import { useRiskData } from "@/hooks/useQueryData";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
-import AddCourseModal from "./AddRiskTableModal";
 import DeleteModal from "@/components/DeleteModal";
-import truncateText from "@/utils/truncateText";
 import { useSearchParams } from "react-router-dom";
-import { useCourseUpdateStatusMutation } from "@/hooks/useMutateData";
-import toast from "react-hot-toast";
 import AddRiskTableModal from "./AddRiskTableModal";
 
 export default function RiskTable() {

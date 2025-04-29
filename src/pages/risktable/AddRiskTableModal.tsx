@@ -31,6 +31,10 @@ export default function AddRiskTableModal({
   const [error, setError] = useState("");
   const [selectedThreatLevel, setSelectedThreatLevel] = useState();
   edit ? editData?.threatLevel : "";
+  const [selectedlLikelihood, setSelectedLikelihood] = useState();
+  edit ? editData?.likelihood : "";
+  const [selectedImpact, setSelectedImpact] = useState();
+  edit ? editData?.impact : "";
   const [selectedAssignee, setSelectedAssignee] = useState();
   edit ? editData?.assignees?.[0]?.username : "";
   const [selectedStatus, setSelectedStatus] = useState();
@@ -40,6 +44,7 @@ export default function AddRiskTableModal({
     title: Yup.string()
       .required("Required")
       .max(50, "Must be 36 characters or less"),
+    deadline: Yup.string().required("Required"),
   });
 
   const {
@@ -56,8 +61,11 @@ export default function AddRiskTableModal({
       risk: editData?.risk,
       action: editData?.action,
       threatLevel: editData?.threatLevel,
+      impact: editData?.impact,
+      likelihood: editData?.likelihood,
       assignees: editData?.assignees?.[0]?.username,
       status: editData?.status,
+      deadline: editData?.deadline?.slice(0, 16),
     },
   });
 
@@ -70,6 +78,9 @@ export default function AddRiskTableModal({
       assignees: editData?.assignees?.[0]?.username,
       status: editData?.status,
       action: editData?.action,
+      impact: editData?.impact,
+      likelihood: editData?.likelihood,
+      deadline: editData?.deadline?.slice(0, 16),
     });
     setError();
   }, [editData, reset, open]);
@@ -109,6 +120,24 @@ export default function AddRiskTableModal({
       label: "Transferred",
     },
   ];
+  const impactOptions = [
+    {
+      value: "low",
+      label: "Low",
+    },
+    {
+      value: "medium",
+      label: "Medium",
+    },
+    {
+      value: "high",
+      label: "High",
+    },
+    {
+      value: "critical",
+      label: "Critical",
+    },
+  ];
   const roleOptions = [
     {
       value: 1,
@@ -137,6 +166,8 @@ export default function AddRiskTableModal({
     const postData = {
       ...data,
       threatLevel: selectedAssignee ?? editData?.threatLevel,
+      impact: selectedImpact ?? editData?.impact,
+      likelihood: selectedlLikelihood ?? editData?.likelihood,
       assignees: [selectedAssignee ?? editData?.assignees?.[0]?.id],
       status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
@@ -264,6 +295,62 @@ export default function AddRiskTableModal({
                       !selectedStatus &&
                       "Required"}
                   </p>
+                </div>
+              </div>
+              <div className="flex justify-between gap-2 mt-2">
+                <div className="w-1/3">
+                  <CustomSelect
+                    options={impactOptions}
+                    label={""}
+                    placeholder={edit ? editData?.impact : "Select impact"}
+                    setSelectedField={setSelectedImpact}
+                    className={"w-full text-sm text-gray-500"}
+                    labelName={"Impact"}
+                    required={true}
+                  />
+                  <p className="text-red-600 text-xs">
+                    {errors?.impact?.message ?? error?.impact}
+                    {hasSubmittedClick &&
+                      !edit &&
+                      !selectedImpact &&
+                      "Required"}
+                  </p>
+                </div>
+                <div className="w-1/3">
+                  <CustomSelect
+                    options={impactOptions}
+                    label={""}
+                    placeholder={
+                      edit ? editData?.likelihood : "Select likelihood"
+                    }
+                    setSelectedField={setSelectedLikelihood}
+                    className={"w-full text-sm text-gray-500"}
+                    labelName={"Likelihood"}
+                    required={true}
+                  />
+                  <p className="text-red-600 text-xs">
+                    {errors?.likelihood?.message ?? error?.likelihood}
+                    {hasSubmittedClick &&
+                      !edit &&
+                      !selectedlLikelihood &&
+                      "Required"}
+                  </p>
+                </div>
+                <div className="w-1/3">
+                  <div className="">
+                    <InputField
+                      type="datetime-local"
+                      register={register}
+                      name="deadline"
+                      className="w-full text-sm text-gray-500"
+                      defaultValue=""
+                      required
+                      label="Deadline"
+                    />
+                    <p className="text-red-600 text-xs">
+                      {errors?.deadline?.message ?? error?.deadline}
+                    </p>
+                  </div>
                 </div>
               </div>
               <p className="text-[#344054] leading-5 font-medium text-sm my-1">

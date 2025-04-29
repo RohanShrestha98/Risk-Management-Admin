@@ -37,7 +37,9 @@ export default function UserOverview() {
             <div className={`w-2 h-2 rounded-full ${item.color}`}></div>
             <p className="text-[#808080] font-medium text-sm">{item.name}</p>
           </div>
-          <p className="text-[#4C4C4C] font-semibold text-base">{item.amount}</p>
+          <p className="text-[#4C4C4C] font-semibold text-base">
+            {item.amount}
+          </p>
         </div>
       ))}
     </div>
@@ -48,7 +50,7 @@ export default function UserOverview() {
   return (
     <div className="py-5 bg-white rounded-xl">
       <div className="px-5 flex justify-between items-center">
-        <h2 className="text-[#4C4C4C] text-lg font-semibold">User Overview</h2>
+        <h2 className="text-[#4C4C4C] text-lg font-semibold">Risk Overview</h2>
         {/* <CustomSelect placeholder="Select User" /> */}
       </div>
       <div className="my-5">
