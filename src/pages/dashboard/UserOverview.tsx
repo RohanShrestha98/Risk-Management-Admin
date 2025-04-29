@@ -46,6 +46,9 @@ export default function UserOverview() {
   );
   const closedLength = data?.data?.filter((item) => item?.status == "closed");
 
+  console.log("closedLength", closedLength);
+  console.log("data", data?.data);
+
   const data01 = [
     { name: "Identified", value: identifiedLength },
     { name: "Evaluated", value: evaluatedLength },
@@ -81,7 +84,7 @@ export default function UserOverview() {
               outerRadius={90}
               fill="#8884d8"
             >
-              {data01.map((entry, index) => (
+              {data01?.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
