@@ -266,7 +266,7 @@ export default function AddRiskTableModal({
                   </p>
                 </div>
                 <div className="w-1/3">
-                  {/* <CustomSelect
+                  <CustomSelect
                     options={roleOptions}
                     label={""}
                     placeholder={
@@ -278,8 +278,8 @@ export default function AddRiskTableModal({
                     className={"w-full text-sm text-gray-500"}
                     labelName={"Assignee"}
                     required={true}
-                  /> */}
-                  <MultiSelect
+                  />
+                  {/* <MultiSelect
                     placeholder={
                       edit
                         ? editData?.assignees?.[0]?.username
@@ -290,7 +290,7 @@ export default function AddRiskTableModal({
                     options={roleOptions}
                     selected={selectedAssignee}
                     setSelected={setSelectedAssignee}
-                  />
+                  /> */}
                   <p className="text-red-600 text-xs">
                     {errors?.assignees?.message ?? error?.assignees}
                     {hasSubmittedClick &&

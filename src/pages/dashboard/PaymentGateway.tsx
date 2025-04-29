@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ComposedChart,
   Bar,
@@ -6,10 +5,6 @@ import {
   YAxis,
   ResponsiveContainer,
 } from "recharts";
-
-import dashCash from "../../assets/dashDollar.png";
-import dashKhalti from "../../assets/dashKhalti.png";
-import dasheSewa from "../../assets/dasheSewa.png";
 import { useRiskData } from "@/hooks/useQueryData";
 
 export default function PaymentGateway() {
@@ -30,10 +25,10 @@ export default function PaymentGateway() {
   ];
 
   const legends = [
-    { name: "Low", amount: low?.length },
-    { name: "Medium", amount: medium?.length },
-    { name: "High", amount: high?.length },
-    { name: "Critical", amount: critical?.length },
+    { color: "#2ECC71", name: "Low", amount: low?.length },
+    { color: "#F1C40F", name: "Medium", amount: medium?.length },
+    { color: "#E67E22", name: "High", amount: high?.length },
+    { color: "#E74C3C", name: "Critical", amount: critical?.length },
   ];
   // Custom legend component
   const CustomLegend = () => (
@@ -44,7 +39,17 @@ export default function PaymentGateway() {
           key={index}
         >
           <div className="flex items-center gap-1">
-            <img src={item?.image} alt="" />
+            <p
+              className={`${
+                item?.name == "Low"
+                  ? "bg-[#2ECC71]"
+                  : item?.name == "Medium"
+                  ? "bg-[#F1C40F]"
+                  : item?.name == "High"
+                  ? "bg-[#E67E22]"
+                  : "bg-[#E74C3C]"
+              } w-6 h-6  min-w-6 rounded-lg min-h-6`}
+            ></p>
             <p className="text-[#808080] font-medium text-sm">{item.name}</p>
           </div>
           <p className="text-[#4C4C4C] font-semibold text-base">
@@ -63,6 +68,7 @@ export default function PaymentGateway() {
           <ComposedChart
             layout="vertical"
             data={data}
+            className="flex flex-col gap-2"
             barCategoryGap={10}
             barGap={14}
           >
@@ -76,25 +82,25 @@ export default function PaymentGateway() {
             <Bar
               dataKey="Low"
               barSize={20}
-              fill="#F28D20"
+              fill="#2ECC71"
               radius={[0, 10, 10, 0]}
             />
             <Bar
               dataKey="Medium"
               barSize={20}
-              fill="#5C2D91"
+              fill="#F1C40F"
               radius={[0, 10, 10, 0]}
             />
             <Bar
               dataKey="High"
               barSize={20}
-              fill="#60BB47"
+              fill="#E67E22"
               radius={[0, 10, 10, 0]}
             />
             <Bar
               dataKey="Critical"
               barSize={20}
-              fill="#60BB47"
+              fill="#E74C3C"
               radius={[0, 10, 10, 0]}
             />
           </ComposedChart>
