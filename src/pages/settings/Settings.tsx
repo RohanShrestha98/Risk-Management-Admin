@@ -5,9 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useChangePasswordMutation } from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
+import LoginInput from "@/ui/LoginInput";
+import Button from "@/ui/Button";
 
 export default function Settings() {
   const [active, setActive] = useState(true);
+  const [error, setError] = useState(true);
   const fieldSchema = Yup.object().shape({
     oldPassword: Yup.string().required("Required"),
     newPassword: Yup.string()
@@ -45,44 +48,71 @@ export default function Settings() {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmitHandler)} className="m-6 border">
+    <form
+      onSubmit={handleSubmit(onSubmitHandler)}
+      className="m-6 border p-4 bg-white"
+    >
       <p
-        className={`text-sm font-semibold ${active ? "text-blue-800" : ""}`}
+        className={`text-sm font-semibold mb-4 ${
+          active ? "text-blue-800" : ""
+        }`}
         onClick={() => setActive(true)}
       >
         Change Password
       </p>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="">
-          <InputField
+      <div className="grid grid-cols-2 text-sm gap-2 w-1/2 ">
+        <div className="rounded-md">
+          <p className="text-gray-600 text-sm font-semibold mb-1">
+            Oid Password <span className="text-red-600">*</span>
+          </p>
+          <LoginInput
+            className="bg-white w-full text-sm"
             register={register}
-            name="firstname"
-            placeholder="Enter First Name"
-            className="w-full text-sm text-gray-500"
-            defaultValue=""
-            required
-            label="First Name"
+            name="oldPassword"
+            type="password"
+            placeholder="Enter old password"
           />
           <p className="text-red-600 text-xs">
-            {errors?.firstname?.message ?? error?.firstname}
+            {errors?.oldPassword?.message ?? error?.oldPassword}
           </p>
         </div>
 
-        <div className="">
-          <InputField
+        <div className="rounded-md">
+          <p className="text-gray-600 text-sm font-semibold mb-1">
+            New Password <span className="text-red-600">*</span>
+          </p>
+          <LoginInput
+            className="bg-white w-full text-sm"
             register={register}
-            name="lastname"
-            placeholder="Enter Last Name"
-            className="w-full text-sm text-gray-500"
-            defaultValue=""
-            required
-            label="Last Name"
+            name="newPassword"
+            type="password"
+            placeholder="Enter new password"
           />
           <p className="text-red-600 text-xs">
-            {errors?.lastname?.message ?? error?.lastname}
+            {errors?.newPassword?.message ?? error?.newPassword}
+          </p>
+        </div>
+        <div className="rounded-md">
+          <p className="text-gray-600 text-sm font-semibold mb-1">
+            New Password <span className="text-red-600">*</span>
+          </p>
+          <LoginInput
+            className="bg-white w-full text-sm"
+            register={register}
+            name="confirmPassword"
+            type="password"
+            placeholder="Enter confirm password"
+          />
+          <p className="text-red-600 text-xs">
+            {errors?.confirmPassword?.message ?? error?.confirmPassword}
           </p>
         </div>
       </div>
+      <Button
+        buttonName={"Change Password"}
+        className={" h-9 w-1/2 text-sm mt-4 font-normal "}
+        icon={undefined}
+      />
     </form>
   );
 }
