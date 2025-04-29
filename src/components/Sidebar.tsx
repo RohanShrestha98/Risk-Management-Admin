@@ -4,18 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import LogoutModal from "./LogoutModal";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { MdOutlinePendingActions } from "react-icons/md";
-import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
+import { IoNotificationsOutline } from "react-icons/io5";
 import { DiAsterisk } from "react-icons/di";
 import { FiUsers } from "react-icons/fi";
-import { GoTasklist } from "react-icons/go";
 import { TbReportSearch } from "react-icons/tb";
 import SideBarItems from "./SideBarItems";
 
 export default function Sidebar({ hideSidebar, setHideSidebar }) {
   const [active, setActive] = useState(window.location.pathname);
-  const [activeContent, setActiveContent] = useState(true);
-  const [activeContentId, setActiveContentId] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {

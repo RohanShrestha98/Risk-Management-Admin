@@ -73,7 +73,6 @@ export default function RiskTable() {
         accessorFn: (row) => row,
         id: "edit",
         cell: (info) => {
-          console.log("info", info);
           return (
             <div className="flex gap-2 text-base justify-center">
               <AddRiskTableModal asChild edit editData={info?.row?.original}>

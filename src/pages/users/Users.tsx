@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useReportData, useRiskData } from "@/hooks/useQueryData";
+import { useRiskData } from "@/hooks/useQueryData";
 import { useSearchParams } from "react-router-dom";
 import { FiFileText } from "react-icons/fi";
 import EmptyPage from "@/components/EmptyPage";
@@ -17,142 +17,140 @@ export default function Users() {
   );
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const [selectedFile, setSelectedFile] = useState([]);
-  const { isLoading, isError } = useRiskData(
+  const { data, isLoading, isError } = useRiskData(
     searchText,
     selectedFile?.id,
     pageSize,
     page
   );
 
-  const data = [
-    {
-      id: 5,
-      title: "Risk",
-      description:
-        " risk description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders.",
-      createdby: 1,
-      threatlevel: 2,
-      risk: "risk",
-      action: "patching",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 6,
-      title: "data",
-      description: "this is data risk",
-      createdby: 1,
-      threatlevel: 3,
-      risk: "risk",
-      action: "evaluating",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 7,
-      title: "Database",
-      description: "database risk",
-      createdby: 1,
-      threatlevel: 4,
-      risk: "risk",
-      action: "patching",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 5,
-      title: "Risk",
-      description:
-        " risk description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders.",
-      createdby: 1,
-      threatlevel: 2,
-      risk: "risk",
-      action: "patching",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 6,
-      title: "data",
-      description: "this is data risk",
-      createdby: 1,
-      threatlevel: 3,
-      risk: "risk",
-      action: "evaluating",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 7,
-      title: "Database",
-      description: "database risk",
-      createdby: 1,
-      threatlevel: 4,
-      risk: "risk",
-      action: "patching",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 5,
-      title: "Risk",
-      description:
-        " risk description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders.",
-      createdby: 1,
-      threatlevel: 2,
-      risk: "risk",
-      action: "patching",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 6,
-      title: "data",
-      description: "this is data risk",
-      createdby: 1,
-      threatlevel: 3,
-      risk: "risk",
-      action: "evaluating",
-      assignees: null,
-      status: "mitigation",
-    },
-    {
-      id: 11,
-      title: "Database",
-      description:
-        "description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause",
-      createdby: 1,
-      threatlevel: 4,
-      risk: "risk",
-      action: "patching",
-      assignees: null,
-      status: "mitigation",
-      auditLog: [
-        {
-          id: 9,
-          createdAt: "2025-04-29 02:19:18",
-          createdBy: "Sakshi",
-          risk: 15,
-          user: 0,
-        },
-        {
-          id: 9,
-          createdAt: "2025-04-29 02:19:18",
-          createdBy: "Rohan",
-          risk: 15,
-          user: 0,
-        },
-      ],
-    },
-  ];
-
-  console.log("data", data);
+  // const data = [
+  //   {
+  //     id: 5,
+  //     title: "Risk",
+  //     description:
+  //       " risk description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders.",
+  //     createdby: 1,
+  //     threatlevel: 2,
+  //     risk: "risk",
+  //     action: "patching",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "data",
+  //     description: "this is data risk",
+  //     createdby: 1,
+  //     threatlevel: 3,
+  //     risk: "risk",
+  //     action: "evaluating",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Database",
+  //     description: "database risk",
+  //     createdby: 1,
+  //     threatlevel: 4,
+  //     risk: "risk",
+  //     action: "patching",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Risk",
+  //     description:
+  //       " risk description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders.",
+  //     createdby: 1,
+  //     threatlevel: 2,
+  //     risk: "risk",
+  //     action: "patching",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "data",
+  //     description: "this is data risk",
+  //     createdby: 1,
+  //     threatlevel: 3,
+  //     risk: "risk",
+  //     action: "evaluating",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Database",
+  //     description: "database risk",
+  //     createdby: 1,
+  //     threatlevel: 4,
+  //     risk: "risk",
+  //     action: "patching",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Risk",
+  //     description:
+  //       " risk description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders.",
+  //     createdby: 1,
+  //     threatlevel: 2,
+  //     risk: "risk",
+  //     action: "patching",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "data",
+  //     description: "this is data risk",
+  //     createdby: 1,
+  //     threatlevel: 3,
+  //     risk: "risk",
+  //     action: "evaluating",
+  //     assignees: null,
+  //     status: "mitigation",
+  //   },
+  //   {
+  //     id: 11,
+  //     title: "Database",
+  //     description:
+  //       "description is a concise statement that summarizes a potential problem and its consequences if it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause, and the consequence.The event is the trigger for the risk, the root cause is the underlying reason for the risk, and the consequence is the impact on objectives if the risk occurs. The risk statement should be clear and concise, using everyday business terms that are easily understood by all stakeholders. it occurs. It should clearly communicate the potential adverse event or condition and how it could impact objectives. A well-structured risk statement helps all stakeholders better understand the program risks and enhances system engineering planning and communicationTo effectively describe a risk, it should include three main components: the event, the root cause",
+  //     createdby: 1,
+  //     threatlevel: 4,
+  //     risk: "risk",
+  //     action: "patching",
+  //     assignees: null,
+  //     status: "mitigation",
+  //     auditLog: [
+  //       {
+  //         id: 9,
+  //         createdAt: "2025-04-29 02:19:18",
+  //         createdBy: "Sakshi",
+  //         risk: 15,
+  //         user: 0,
+  //       },
+  //       {
+  //         id: 9,
+  //         createdAt: "2025-04-29 02:19:18",
+  //         createdBy: "Rohan",
+  //         risk: 15,
+  //         user: 0,
+  //       },
+  //     ],
+  //   },
+  // ];
 
   useEffect(() => {
     setSelectedFile(data?.[0]);
   }, []);
 
-  const riskData = data;
+  const riskData = data?.data;
 
   const columns = useMemo(
     () => [

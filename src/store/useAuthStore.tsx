@@ -8,7 +8,6 @@ const authStore = (set: any) => ({
   user: decryptedData(cookies.get("user")) || null,
 
   setUser: (user: any) => {
-    console.log("user", user);
     set(() => {
       cookies.set("user", encryptData(user));
       return { user: user };
