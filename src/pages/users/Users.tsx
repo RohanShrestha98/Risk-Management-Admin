@@ -155,6 +155,8 @@ export default function Users() {
     selectedFile?.id ?? data?.data?.[0]?.id
   );
 
+  console.log("riskDetailsData", riskDetailsData);
+
   const riskData = riskDetailsData?.data ?? data?.data?.[0];
 
   const pdfRef = useRef(null);
