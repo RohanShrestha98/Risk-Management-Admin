@@ -10,9 +10,12 @@ import AddNotificationModal from "./AddNotificationModal";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
 import { useSearchParams } from "react-router-dom";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Notification() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user } = useAuthStore();
+  const role = user?.data?.role?.id;
   const [searchText, setSearchText] = useState(
     searchParams.get("searchText") ?? ""
   );
@@ -22,8 +25,8 @@ export default function Notification() {
   const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const { data, isLoading, isError } = useNotificationData();
 
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    const cols = [
       {
         accessorFn: (row, index) => index + 1,
         id: "id",
@@ -126,9 +129,10 @@ export default function Notification() {
         header: () => <span className="flex justify-center">Action</span>,
         footer: (props) => props.column.id,
       },
-    ],
-    []
-  );
+    ];
+    const showActions = role == 1 || role == 5; // or any condition
+    return showActions ? cols : cols.slice(0, -1);
+  }, []);
 
   useEffect(() => {
     const searchQuery = {
@@ -141,15 +145,18 @@ export default function Notification() {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <AddNotificationModal asChild>
-        <div>
-          <TopButton
-            buttonName={"Add Notification"}
-            className={""}
-            handleButtonClick={() => {}}
-          />
-        </div>
-      </AddNotificationModal>
+      {(role == 1 || role == 5) && (
+        <AddNotificationModal asChild>
+          <div>
+            <TopButton
+              buttonName={"Add Notification"}
+              className={""}
+              handleButtonClick={() => {}}
+            />
+          </div>
+        </AddNotificationModal>
+      )}
+
       <div>
         <SearchPagination
           totalPage={data?.totalPage}

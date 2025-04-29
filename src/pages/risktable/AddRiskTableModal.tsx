@@ -16,6 +16,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import toast from "react-hot-toast";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
+import moment from "moment";
 
 export default function AddRiskTableModal({
   asChild,
@@ -176,6 +177,7 @@ export default function AddRiskTableModal({
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
       action: ConvertHtmlToPlainText(action),
+      deadline: moment(data?.deadline).format(),
     };
 
     try {

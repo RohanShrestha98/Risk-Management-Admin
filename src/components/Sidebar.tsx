@@ -9,10 +9,14 @@ import { DiAsterisk } from "react-icons/di";
 import { FiUsers } from "react-icons/fi";
 import { TbReportSearch } from "react-icons/tb";
 import SideBarItems from "./SideBarItems";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Sidebar({ hideSidebar, setHideSidebar }) {
   const [active, setActive] = useState(window.location.pathname);
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+  console.log("user", user?.data?.role);
+  const role = user?.data?.role?.id;
 
   useEffect(() => {
     setActive(window.location.pathname);
@@ -26,7 +30,13 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
       link: "/notification",
     },
     { id: 2, name: "Risk Table", icon: <DiAsterisk />, link: "/risk" },
-    { id: 3, name: "Users", icon: <FiUsers />, link: "/user" },
+    {
+      id: 3,
+      name: "Users",
+      visiable: role == 1 ? false : true,
+      icon: <FiUsers />,
+      link: "/user",
+    },
     // { id: 4, name: "Task", icon: <GoTasklist />, link: "/task" },
     {
       id: 5,
@@ -60,14 +70,16 @@ export default function Sidebar({ hideSidebar, setHideSidebar }) {
       <div className="flex  flex-col  h-[84vh] overflow-auto no-scrollbar ">
         <div className="flex flex-col ">
           {sidebar?.map((item) => {
-            return (
-              <SideBarItems
-                item={item}
-                handleActive={handleActive}
-                active={active}
-                hideSidebar={hideSidebar}
-              />
-            );
+            if (!item?.visiable) {
+              return (
+                <SideBarItems
+                  item={item}
+                  handleActive={handleActive}
+                  active={active}
+                  hideSidebar={hideSidebar}
+                />
+              );
+            }
           })}
         </div>
         {/* {sidebar?.map((items) => {

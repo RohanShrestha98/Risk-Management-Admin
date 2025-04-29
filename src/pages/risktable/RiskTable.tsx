@@ -8,6 +8,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import DeleteModal from "@/components/DeleteModal";
 import { useSearchParams } from "react-router-dom";
 import AddRiskTableModal from "./AddRiskTableModal";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function RiskTable() {
   const [selectedField, setSelectedField] = useState("");
@@ -15,6 +16,8 @@ export default function RiskTable() {
   const [searchText, setSearchText] = useState(
     searchParams.get("searchText") ?? ""
   );
+  const { user } = useAuthStore();
+  const role = user?.data?.role?.id;
   const [pageSize, setPageSize] = useState(
     searchParams.get("pageSize") ?? "10"
   );
@@ -26,8 +29,8 @@ export default function RiskTable() {
     page
   );
 
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    const cols = [
       {
         accessorFn: (row, index) => index + 1,
         id: "id",
@@ -88,9 +91,10 @@ export default function RiskTable() {
         header: () => <span className="flex justify-center">Action</span>,
         footer: (props) => props.column.id,
       },
-    ],
-    []
-  );
+    ];
+    const showActions = role !== 5; // or any condition
+    return showActions ? cols : cols.slice(0, -1);
+  }, []);
 
   useEffect(() => {
     const searchQuery = {
@@ -103,17 +107,20 @@ export default function RiskTable() {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <div className="flex justify-end items-center">
-        <AddRiskTableModal asChild>
-          <div>
-            <TopButton
-              buttonName={"Add Risk"}
-              className={""}
-              handleButtonClick={() => {}}
-            />
-          </div>
-        </AddRiskTableModal>
-      </div>
+      {!(role == 3 || role == 4 || role == 5) && (
+        <div className="flex justify-end items-center">
+          <AddRiskTableModal asChild>
+            <div>
+              <TopButton
+                buttonName={"Add Risk"}
+                className={""}
+                handleButtonClick={() => {}}
+              />
+            </div>
+          </AddRiskTableModal>
+        </div>
+      )}
+
       <div>
         <SearchPagination
           totalPage={data?.totalPage}
