@@ -169,14 +169,14 @@ export default function AddRiskTableModal({
   console.log("selectedAssignee", selectedAssignee);
 
   const onSubmitHandler = async (data) => {
-    // const assignees = [];
-    // selectedAssignee?.map((item) => assignees?.push(item?.value));
+    const assignees = [];
+    selectedAssignee?.map((item) => assignees?.push(item?.value));
     const postData = {
       ...data,
       threatLevel: parseInt(selectedThreatLevel ?? editData?.threatLevel),
       impact: selectedImpact ?? editData?.impact,
       likelihood: selectedlLikelihood ?? editData?.likelihood,
-      assignees: selectedAssignee ?? editData?.assignees?.[0]?.id,
+      assignees: assignees ?? editData?.assignees,
       status: selectedStatus ?? editData?.status,
       description: ConvertHtmlToPlainText(value),
       risk: ConvertHtmlToPlainText(risk),
@@ -266,7 +266,7 @@ export default function AddRiskTableModal({
                   </p>
                 </div>
                 <div className="w-1/3">
-                  <CustomSelect
+                  {/* <CustomSelect
                     options={roleOptions}
                     label={""}
                     placeholder={
@@ -278,8 +278,8 @@ export default function AddRiskTableModal({
                     className={"w-full text-sm text-gray-500"}
                     labelName={"Assignee"}
                     required={true}
-                  />
-                  {/* <MultiSelect
+                  /> */}
+                  <MultiSelect
                     placeholder={
                       edit
                         ? editData?.assignees?.[0]?.username
@@ -290,7 +290,7 @@ export default function AddRiskTableModal({
                     options={roleOptions}
                     selected={selectedAssignee}
                     setSelected={setSelectedAssignee}
-                  /> */}
+                  />
                   <p className="text-red-600 text-xs">
                     {errors?.assignees?.message ?? error?.assignees}
                     {hasSubmittedClick &&
