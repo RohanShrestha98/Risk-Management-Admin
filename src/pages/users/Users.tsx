@@ -259,7 +259,7 @@ export default function Users() {
             </p>
             <div
               ref={pdfRef}
-              className="max-h-[70vh] min-h-[400px] overflow-auto"
+              className="max-h-[70vh] p-4 min-h-[400px] overflow-auto"
             >
               <div className="flex flex-col gap-2">
                 <p className="text-lg font-medium"> {riskData?.title}</p>
