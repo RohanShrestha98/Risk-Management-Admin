@@ -8,6 +8,10 @@ export default function DashboardTop() {
   const { data: userData } = useUserData();
   const { data: riskData } = useRiskData();
   const { data: completedRiskData } = useRiskData("", "", "50", "");
+
+  const completedData = completedRiskData?.data?.filter(
+    (item) => item?.status == "closed"
+  );
   const items = [
     {
       icon: <FaUser color="white" fontSize={14} />,
@@ -31,7 +35,7 @@ export default function DashboardTop() {
     {
       icon: <HiCurrencyDollar color="white" fontSize={18} />,
       title: "Completed Task",
-      amount: completedRiskData?.data?.length ?? 0,
+      amount: completedData?.length ?? 0,
       // percentage: -2,
       bgColor: "bg-[#7DE888]",
     },

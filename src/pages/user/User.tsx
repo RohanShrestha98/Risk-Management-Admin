@@ -85,13 +85,10 @@ export default function User() {
         cell: (info) => {
           return (
             <p
-              className={`inline-block text-xs px-4 cursor-default rounded-full py-[2px] font-medium ${
-                info?.row?.original?.isVerified
-                  ? "text-white bg-[#027A48]"
-                  : "text-white bg-red-500"
-              }`}
+              className={`inline-block text-xs px-4 cursor-default rounded-full py-[2px] font-medium text-white bg-[#027A48]
+                  `}
             >
-              {info?.row?.original?.isVerified ? "Verified" : "Not verified"}
+              {"Verified"}
             </p>
           );
         },
