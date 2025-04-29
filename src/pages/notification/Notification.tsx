@@ -67,13 +67,13 @@ export default function Notification() {
         ell: (info) => {
           return (
             <div>
-              {info?.row?.original?.recipient == 1
+              {info?.row?.original?.recipient == "1"
                 ? "Admin"
-                : info?.row?.original?.recipient == 2
+                : info?.row?.original?.recipient == "2"
                 ? "Analyst"
-                : info?.row?.original?.recipient == 3
+                : info?.row?.original?.recipient == "3"
                 ? "Mid Level Analyst"
-                : info?.row?.original?.recipient == 4
+                : info?.row?.original?.recipient == "4"
                 ? "Executive Level Analyst"
                 : "ISO"}
             </div>
